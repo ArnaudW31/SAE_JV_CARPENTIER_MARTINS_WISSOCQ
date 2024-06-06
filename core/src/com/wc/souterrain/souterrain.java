@@ -323,17 +323,6 @@ public class souterrain extends ApplicationAdapter {
                         lastTurn4=false;
                     }
                 }
-                if((prout==true)&&(playerFinalC!=null)){
-                    currentPlayer=playerFinalC;
-                    currentZone = ZoneHuit;
-                    currentTilemap = currentZone.getRenderer();
-                    if(finalCbtArene==0){
-                        playerFinalC.setPosition(spawnF1);
-                        posPlayer.x = playerFinalC.getPosition().getX()*32+playerFinalC.getPosition().getY()*32;
-                        posPlayer.y = playerFinalC.getPosition().getY()*16-playerFinalC.getPosition().getX()*16+40;
-                        finalCbtArene=1;
-                    }
-                }
 
                 if(!inInterface){
                     if(Gdx.input.isKeyPressed(Keys.RIGHT) && !seDeplace){
@@ -530,7 +519,7 @@ public class souterrain extends ApplicationAdapter {
                             }
                             
                             else if(playerFinalC==null){
-                                System.out.println("Harry Potter et le prout de feu");
+                                //System.out.println("Harry Potter et le prout de feu");
                                 Player p = (Player) UIfs.getFighterA();
                                 playerFinalC = new Player(p);
                                 System.out.println(playerFinalC.getName()+ " est le playerFinalC. PlayerFinalC est défini.");
@@ -549,24 +538,27 @@ public class souterrain extends ApplicationAdapter {
                                 playerFinalC.resetHealth();
                             }
                         }
+                        else{
+                            Random random = new Random();
+                            int statToIncrease = random.nextInt(3);
+                            switch (statToIncrease) {
+                                case 0:
+                                    currentPlayer.setDmg(UIfs.getFighterA().getDmg() + 5); 
+                                    break;
+                                case 1:
+                                    currentPlayer.setMaxHp(UIfs.getFighterA().getMaxHp() + 10); 
+                                    break;
+                                case 2:
+                                    currentPlayer.setDef(UIfs.getFighterA().getDef() + 10);
+                                    break;
+                            }
+                        }
                         UIfs.getFighterB().resetHealth();
                         UIfs.isFighting = false;
                         inInterface = false;
                         round+=roundAdd;
                         
-                        Random random = new Random();
-                        int statToIncrease = random.nextInt(3);
-                        switch (statToIncrease) {
-                            case 0:
-                                UIfs.getFighterA().setDmg(UIfs.getFighterA().getDmg() + 5); 
-                                break;
-                            case 1:
-                                UIfs.getFighterA().setHp(UIfs.getFighterA().getHp() + 10); 
-                                break;
-                            case 2:
-                                UIfs.getFighterA().setDef(UIfs.getFighterA().getDef() + 10);
-                                break;
-                        }
+                        
                         
                         if(UIfs.getFighterB().getName().equals("Minotaure")){
                             Consommable excm = new Consommable();
@@ -594,6 +586,15 @@ public class souterrain extends ApplicationAdapter {
 
                         posPlayer.x = currentPlayer.getPosition().getX()*32+currentPlayer.getPosition().getY()*32;
                         posPlayer.y = currentPlayer.getPosition().getY()*16-currentPlayer.getPosition().getX()*16+40;
+                        
+                        if((playerFinalC!=null)){
+                            currentPlayer=playerFinalC;
+                            currentZone = ZoneHuit;
+                            currentTilemap = currentZone.getRenderer();
+                            playerFinalC.setPosition(spawnF1);
+                            posPlayer.x = playerFinalC.getPosition().getX()*32+playerFinalC.getPosition().getY()*32;
+                            posPlayer.y = playerFinalC.getPosition().getY()*16-playerFinalC.getPosition().getX()*16+40;
+                        }
 
                         currentStage = UImp;
 
@@ -652,27 +653,36 @@ public class souterrain extends ApplicationAdapter {
                         inInterface = false;
                         round+=roundAdd;
                         
-                        Random random = new Random();
-                        int statToIncrease = random.nextInt(3);
-                        switch (statToIncrease) {
-                            case 0:
-                                UIfs.getFighterB().setDmg(UIfs.getFighterB().getDmg() + 5); 
-                                break;
-                            case 1:
-                                UIfs.getFighterB().setHp(UIfs.getFighterB().getHp() + 10); 
-                                break;
-                            case 2:
-                                UIfs.getFighterB().setDef(UIfs.getFighterB().getDef() + 10);
-                                break;
-                        }
+//                        Random random = new Random();
+//                        int statToIncrease = random.nextInt(3);
+//                        switch (statToIncrease) {
+//                            case 0:
+//                                UIfs.getFighterB().setDmg(UIfs.getFighterB().getDmg() + 5); 
+//                                break;
+//                            case 1:
+//                                UIfs.getFighterB().setHp(UIfs.getFighterB().getHp() + 10); 
+//                                break;
+//                            case 2:
+//                                UIfs.getFighterB().setDef(UIfs.getFighterB().getDef() + 10);
+//                                break;
+//                        }
                         
 
                         currentZone = board.getZones().get(round%4);
                         currentPlayer = currentZone.getPlayer();
                         currentTilemap = currentZone.getRenderer();
-
+                        
                         posPlayer.x = currentPlayer.getPosition().getX()*32+currentPlayer.getPosition().getY()*32;
                         posPlayer.y = currentPlayer.getPosition().getY()*16-currentPlayer.getPosition().getX()*16+40;
+                        
+                        if((playerFinalC!=null)){
+                            currentPlayer=playerFinalC;
+                            currentZone = ZoneHuit;
+                            currentTilemap = currentZone.getRenderer();
+                            playerFinalC.setPosition(spawnF1);
+                            posPlayer.x = playerFinalC.getPosition().getX()*32+playerFinalC.getPosition().getY()*32;
+                            posPlayer.y = playerFinalC.getPosition().getY()*16-playerFinalC.getPosition().getX()*16+40;
+                        }
 
                         currentStage = UImp;
 
@@ -824,11 +834,11 @@ public class souterrain extends ApplicationAdapter {
         ObligatoryCaseType.add("shop");
         ObligatoryCaseType.add("mboss");
         ObligatoryCaseType.add("mboss");
-            for(int q=4;q<10;q++){
+            for(int q=4;q<9;q++){
                 ObligatoryCaseType.add("neutre");
             }
 
-            for(int q=10;q<16;q++){
+            for(int q=9;q<16;q++){
                 ObligatoryCaseType.add ("vert");
             }
 
