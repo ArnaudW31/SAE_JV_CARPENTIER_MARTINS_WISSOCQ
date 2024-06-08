@@ -36,6 +36,7 @@ public class TitleScene extends Stage {
     private TextField TFName;
     private Label selectTimeLb;
     public TextField selectTime;
+    private TextButton AIbutton;
     private ImageButton selectSkin1;
     private ImageButton selectSkin2;
     private ImageButton selectSkin3;
@@ -49,6 +50,8 @@ public class TitleScene extends Stage {
     private Label selectedSkinLb;
     public boolean finished;
     public boolean init;
+    public ArrayList<Boolean> addAI;
+    public boolean buttonAIclicked;
     public ArrayList<String> spriteList;
     public ArrayList<String> nameList;
     public int clickedSkin;
@@ -62,6 +65,7 @@ public class TitleScene extends Stage {
         nameList = new ArrayList<>();
         clickedSkin = 0;
         init = false;
+        addAI = new ArrayList<Boolean>();
         
         nomLb = new Label("Le souterrain des Heros", skin);
         
@@ -78,6 +82,9 @@ public class TitleScene extends Stage {
         
         selectTime = new TextField("Durée de la partie ",skin);
         setTransparent(selectTime);
+        
+        AIbutton = new TextButton("Ajouter une IA",skin);
+        setTransparent(AIbutton);
         
         selectSkin1=new ImageButton(new SpriteDrawable(new Sprite(new Texture (Gdx.files.internal("bonorme.png")))));
         setTransparent(selectSkin1);
@@ -151,6 +158,7 @@ public class TitleScene extends Stage {
                 setOpaque(validateButton);
                 setOpaque(entreePseudoLb);
                 setOpaque(selectedSkinLb);    
+                setOpaque(AIbutton);
             }
         });
         
@@ -212,6 +220,13 @@ public class TitleScene extends Stage {
             }
         });
         
+        AIbutton.addListener(new ClickListener(){
+            @Override
+            public void clicked(InputEvent event,float x, float y){
+                buttonAIclicked = !buttonAIclicked;
+            }
+        });
+        
         validateButton.addListener(new ClickListener(){
             @Override
             public void clicked(InputEvent event,float x, float y){
@@ -241,6 +256,8 @@ public class TitleScene extends Stage {
                             selectSkin4.getImage().setColor(0.2f, 0.2f, 0.2f, 0.9f);
                             break;
                     }
+                    addAI.add(buttonAIclicked);
+                    buttonAIclicked = false;
                     clickedSkin = 0;
                     selectedSkin.setDrawable(new SpriteDrawable(new Sprite(new Texture (Gdx.files.internal("bones.png")))));
                     selectedSkin.setBounds(50, 200, 128, 256);
@@ -257,6 +274,7 @@ public class TitleScene extends Stage {
                         setTransparent(validateButton);
                         setTransparent(entreePseudoLb);
                         setTransparent(selectedSkinLb);
+                        setTransparent(AIbutton);
                         setOpaque(selectTime);
                         setOpaque(selectTimeLb);
                         setOpaque(returnTimeButton);
@@ -271,6 +289,10 @@ public class TitleScene extends Stage {
                     nameList.add("Mama");
                     nameList.add("Mimi");
                     nameList.add("Mumu");
+                    addAI.add(true);
+                    addAI.add(true);
+                    addAI.add(false);
+                    addAI.add(false);
                     setTransparent(TFName);
                     setTransparent(selectSkin1);
                     setTransparent(selectSkin2);
@@ -280,6 +302,7 @@ public class TitleScene extends Stage {
                     setTransparent(validateButton);
                     setTransparent(entreePseudoLb);
                     setTransparent(selectedSkinLb);
+                    setTransparent(AIbutton);
                     setOpaque(selectTime);
                     setOpaque(selectTimeLb);
                     setOpaque(returnTimeButton);
@@ -318,6 +341,7 @@ public class TitleScene extends Stage {
         creditsLb.setPosition(50, 150);
         returnButton.setPosition(700, 700);
         
+        AIbutton.setPosition(650,600);
         selectTime.setPosition(350,400);
         selectTimeLb.setPosition(350, 300);
         returnTimeButton.setPosition(600,100);
@@ -333,6 +357,7 @@ public class TitleScene extends Stage {
         addActor(entreePseudoLb);
         addActor(selectedSkinLb);
         addActor(TFName);
+        addActor(AIbutton);
         addActor(selectTime);
         addActor(selectSkin1);
         addActor(selectSkin2);

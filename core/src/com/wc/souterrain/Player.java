@@ -9,6 +9,7 @@ public class Player extends Entity{
     private ArrayList<Consommable> inventory;
     private Case currentPos;
     private String weapon;
+    private boolean isAI;
 
     // constructeur spécifique à la classe Player
     public Player(){
@@ -29,6 +30,7 @@ public class Player extends Entity{
         this.inventory = new ArrayList<Consommable>();
         this.currentPos = new Case(0,0, "neutre");
         this.weapon = "fist";
+        this.isAI = true;
     }
     
     public Player(Player play){
@@ -51,6 +53,7 @@ public class Player extends Entity{
         this.inventory = play.getInventory();
         this.currentPos = play.getPosition();
         this.weapon = play.getWeapon();
+        this.isAI = play.getAI();
     }
 
     // méthodes spécifiques à la classe Player
@@ -102,6 +105,14 @@ public class Player extends Entity{
         this.inventory = inventory;
     }
     
+    public void setAI(boolean isAI){
+        this.isAI = isAI;
+    }
+    
+    public boolean getAI(){
+        return this.isAI;
+    }
+    
     @Override
     public boolean equals(Object o){
         boolean result = false;
@@ -113,7 +124,9 @@ public class Player extends Entity{
                         if(p.getDef()==this.getDef()){
                             if(p.getCrit()==this.getCrit()){
                                 if(p.getSpeed()==this.getSpeed()){
-                                    result = true;
+                                    if(p.getAI()==this.getAI()){
+                                        result = true;
+                                    }
                                 }
                             }
                         }

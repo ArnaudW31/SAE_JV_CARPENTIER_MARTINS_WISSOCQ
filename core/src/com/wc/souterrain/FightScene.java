@@ -169,7 +169,7 @@ public class FightScene extends Stage {
                         FightSequence(fighterA, fighterB,spriteEnnemy1,lostHealthF1,ennemyHealth2,animF1,lossF1);
                         currentAttacker = fighterB;
                     }
-                    //animation d'attaque du combattant A
+                    //animation d'attaque du combattant B
                     else{
                         FightSequence(fighterB, fighterA,spriteEnnemy2,lostHealthF2,ennemyHealth1,animF2,lossF2);
                         currentAttacker = fighterA;
@@ -310,6 +310,11 @@ public class FightScene extends Stage {
         }
         else{
             currentAttacker = fighterB;
+            if(!fighterB.getClass().toString().equals("class com.wc.souterrain.Player")){ //si le fighterB est plus rapide et que c'est un monstre
+                FightSequence(fighterB, fighterA,spriteEnnemy2,lostHealthF2,ennemyHealth1,animF2,lossF2);
+                        currentAttacker = fighterA;
+                //alors l'ennemi attaque
+            }
         }
         
     }
