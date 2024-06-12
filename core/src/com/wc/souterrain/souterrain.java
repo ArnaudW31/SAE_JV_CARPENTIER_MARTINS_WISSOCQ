@@ -38,7 +38,6 @@ public class souterrain extends ApplicationAdapter {
     private Texture shopImg;
     private Sound walkSound;
     private Rectangle posPlayer;
-    private Skin skin;
 
     private Entity Skeleton;
     private Entity Zombie;
