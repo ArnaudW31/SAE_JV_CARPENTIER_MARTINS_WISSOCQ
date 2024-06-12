@@ -310,7 +310,7 @@ public class FightScene extends Stage {
         }
         else{
             currentAttacker = fighterB;
-            if(!fighterB.getClass().toString().equals("class com.wc.souterrain.Player")){ //si le fighterB est plus rapide et que c'est un monstre
+            if(fighterB.getClass().toString().equals("class com.wc.souterrain.Entity")){ //si le fighterB est plus rapide et que c'est un monstre
                 FightSequence(fighterB, fighterA,spriteEnnemy2,lostHealthF2,ennemyHealth1,animF2,lossF2);
                         currentAttacker = fighterA;
                 //alors l'ennemi attaque
