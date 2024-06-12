@@ -61,8 +61,9 @@ public class Entity{
     
     
     public void setMaxHp(int mhp){
+        this.hp += this.maxHp - mhp;
         this.maxHp = mhp;
-        this.resetHealth();
+        
     }
     public int getMaxHp(){
         return this.maxHp;

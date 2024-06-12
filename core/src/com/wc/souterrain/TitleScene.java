@@ -29,6 +29,7 @@ public class TitleScene extends Stage {
     //Image du skin
     //1 boutons valider
     
+    private Label nomLb;
     private TextButton startButton;
     private TextButton creditsButton;
     private TextButton quitButton;
@@ -62,6 +63,8 @@ public class TitleScene extends Stage {
         clickedSkin = 0;
         init = false;
         
+        nomLb = new Label("Le souterrain des Heros", skin);
+        
         startButton = new TextButton("Commencer",skin);
         //setTransparent(startButton);
         creditsButton = new TextButton("Credits",skin);
@@ -69,8 +72,10 @@ public class TitleScene extends Stage {
         quitButton = new TextButton("Quitter", skin);
         //setTransparent(quitButton);
         
-        TFName = new TextField("Pseudo",skin);
+        TFName = new TextField("",skin);
+        TFName.setMessageText("Pseudo");
         setTransparent(TFName);
+        
         selectTime = new TextField("Durée de la partie ",skin);
         setTransparent(selectTime);
         
@@ -133,6 +138,7 @@ public class TitleScene extends Stage {
         startButton.addListener(new ClickListener(){
             @Override
             public void clicked(InputEvent event,float x, float y){
+                setTransparent(nomLb);
                 setTransparent(startButton);
                 setTransparent(creditsButton);
                 setTransparent(quitButton);
@@ -256,6 +262,28 @@ public class TitleScene extends Stage {
                         setOpaque(returnTimeButton);
                     }
                 }
+                else if(TFName.getText().equals("gubed")){
+                    spriteList.add("bonorme.png");
+                    spriteList.add("bonirme.png");
+                    spriteList.add("bonarme.png");
+                    spriteList.add("bonerme.png");
+                    nameList.add("Momo");
+                    nameList.add("Mama");
+                    nameList.add("Mimi");
+                    nameList.add("Mumu");
+                    setTransparent(TFName);
+                    setTransparent(selectSkin1);
+                    setTransparent(selectSkin2);
+                    setTransparent(selectSkin3);
+                    setTransparent(selectSkin4);
+                    setTransparent(selectedSkin);
+                    setTransparent(validateButton);
+                    setTransparent(entreePseudoLb);
+                    setTransparent(selectedSkinLb);
+                    setOpaque(selectTime);
+                    setOpaque(selectTimeLb);
+                    setOpaque(returnTimeButton);
+                }
             }
         });
         
@@ -278,6 +306,7 @@ public class TitleScene extends Stage {
         });
         
         //positionnement
+        nomLb.setPosition(250,480);
         startButton.setPosition(350, 400);
         creditsButton.setPosition(350, 320);
         quitButton.setPosition(350, 240);
@@ -295,6 +324,7 @@ public class TitleScene extends Stage {
         
         
         //ajout des acteurs
+        addActor(nomLb);
         addActor(startButton);
         addActor(creditsButton);
         addActor(quitButton);
