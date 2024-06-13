@@ -166,6 +166,7 @@ public class ShopScene extends Stage {
                         break;
                 }
             }
+            isShopping = false;
         }
         
         addActor(breadImg);
