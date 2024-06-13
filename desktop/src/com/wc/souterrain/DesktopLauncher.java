@@ -18,7 +18,7 @@ public class DesktopLauncher {
         config.setForegroundFPS(60);
         config.setWindowedMode(1000, 800);
         config.useVsync(true);
-        config.setTitle("SAE_JV");
+        config.setTitle("SAE_JV"); 
         config.setWindowIcon("bread.png");
         new Lwjgl3Application(new souterrain(), config);
     }

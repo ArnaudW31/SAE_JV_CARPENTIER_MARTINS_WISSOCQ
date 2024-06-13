@@ -33,6 +33,8 @@ public class TitleScene extends Stage {
     private TextButton startButton;
     private TextButton creditsButton;
     private TextButton quitButton;
+    private TextButton onlineButton;
+    private TextButton localButton;
     private TextField TFName;
     private Label selectTimeLb;
     public TextField selectTime;
@@ -71,6 +73,12 @@ public class TitleScene extends Stage {
         //setTransparent(creditsButton);
         quitButton = new TextButton("Quitter", skin);
         //setTransparent(quitButton);
+        
+        onlineButton = new TextButton("Jouer en ligne", skin);
+        setTransparent(onlineButton);
+        
+        localButton = new TextButton("Jouer en local", skin);
+        setTransparent(localButton);
         
         TFName = new TextField("",skin);
         TFName.setMessageText("Pseudo");
@@ -111,9 +119,10 @@ public class TitleScene extends Stage {
         setTransparent(selectedSkinLb);
         
         creditsLb = new Label("Conception : Arnaud et Simon\n"
-                            + "Developpement : Arnaud et Simon\n"
+                            + "Developpement : Arnaud, Simon et Pierre\n"
                             + "Sprites et Textures : Arnaud\n"
                             + "Gold II sur TFT : Simon\n"
+                            + "Mise en reseau : Pierre\n"
                             + "\n"
                             + "Framework utilise : LibGDX\n"
                             + "Outils utilises : Tiled, Pixelorama, gitlab\n"
@@ -142,15 +151,7 @@ public class TitleScene extends Stage {
                 setTransparent(startButton);
                 setTransparent(creditsButton);
                 setTransparent(quitButton);
-                setOpaque(TFName);
-                setOpaque(selectSkin1);
-                setOpaque(selectSkin2);
-                setOpaque(selectSkin3);
-                setOpaque(selectSkin4);
-                setOpaque(selectedSkin);
-                setOpaque(validateButton);
-                setOpaque(entreePseudoLb);
-                setOpaque(selectedSkinLb);    
+                    
             }
         });
         
@@ -169,6 +170,47 @@ public class TitleScene extends Stage {
             @Override
             public void clicked(InputEvent event,float x, float y){
                 System.exit(0);
+            }
+        });
+        
+        onlineButton.addListener(new ClickListener(){
+            @Override
+            public void clicked(InputEvent event,float x, float y){
+                setTransparent(onlineButton);
+                setTransparent(localButton);
+                setOpaque(TFName);
+                setOpaque(selectSkin1);
+                setOpaque(selectSkin2);
+                setOpaque(selectSkin3);
+                setOpaque(selectSkin4);
+                setOpaque(selectedSkin);
+                setOpaque(validateButton);
+                setOpaque(entreePseudoLb);
+                setOpaque(selectedSkinLb);
+                
+                new Thread(new Runnable() {
+                    @Override
+                    public void run() {
+                        GameClient.main(new String[0]);
+                    }
+                }).start();
+            }
+        });
+        
+        localButton.addListener(new ClickListener(){
+            @Override
+            public void clicked(InputEvent event,float x, float y){
+                setTransparent(onlineButton);
+                setTransparent(localButton);
+                setOpaque(TFName);
+                setOpaque(selectSkin1);
+                setOpaque(selectSkin2);
+                setOpaque(selectSkin3);
+                setOpaque(selectSkin4);
+                setOpaque(selectedSkin);
+                setOpaque(validateButton);
+                setOpaque(entreePseudoLb);
+                setOpaque(selectedSkinLb);
             }
         });
         
@@ -311,6 +353,9 @@ public class TitleScene extends Stage {
         creditsButton.setPosition(350, 320);
         quitButton.setPosition(350, 240);
         
+        onlineButton.setPosition(250,500);
+        localButton.setPosition(250,300);
+        
         TFName.setPosition(50, 600);
         entreePseudoLb.setPosition(50, 650);
         selectedSkinLb.setPosition(520, 550);
@@ -328,6 +373,8 @@ public class TitleScene extends Stage {
         addActor(startButton);
         addActor(creditsButton);
         addActor(quitButton);
+        addActor(onlineButton);
+        addActor(localButton);
         addActor(selectedSkin);
         addActor(creditsLb);
         addActor(entreePseudoLb);
