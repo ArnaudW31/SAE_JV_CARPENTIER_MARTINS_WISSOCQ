@@ -93,6 +93,7 @@ public class souterrain extends ApplicationAdapter {
     int troisiemeCbtArene = 0;
     int finalCbtArene = 0;
 
+    @Override
     public  void create () {
         //gestion du jeu
         Consommable pain = new Consommable();
@@ -378,7 +379,6 @@ public class souterrain extends ApplicationAdapter {
                                     deplacement();
                                 }
                             }, dureeDeplacement);
-
                         }
                     }
                 }
@@ -403,7 +403,27 @@ public class souterrain extends ApplicationAdapter {
                         }
                     }
                 }
+                    if(Gdx.input.isKeyPressed(Keys.DOWN) && !seDeplace){
+                        Case nextPos = new Case(currentPlayer.getPosition().getX(),currentPlayer.getPosition().getY()-6, "");
+                        for(Case c : currentZone.getCases()){
 
+                            if(c.samePosition(nextPos)){
+                                seDeplace = true;
+                                direction = "bas";
+                                posPlayer.x = currentPlayer.getPosition().getX()*32+currentPlayer.getPosition().getY()*32;
+                                posPlayer.y = currentPlayer.getPosition().getY()*16-currentPlayer.getPosition().getX()*16+40;
+                                currentPlayer.setPosition(nextPos);
+                                walkSound.play(9);
+                                Timer.schedule(new Timer.Task() { //on crée un timer qui s'exécutera 0.5 secondes après
+                                    @Override
+                                    public void run() { //le timer fera ça à la fin du décompte
+                                        deplacement();
+                                    }
+                                },dureeDeplacement);
+                            }
+                        }
+                    }   
+                
                 //posPlayer.setPosition(UImp.attributeList.getChild(0).getX(), UImp.attributeList.getChild(0).getY());
                 //System.out.println(posPlayer.x+"    "+posPlayer.y);
                 camera.position.set(posPlayer.x, posPlayer.y, 0);
@@ -504,9 +524,10 @@ public class souterrain extends ApplicationAdapter {
 
             } else if(inInterface) { //si on est dans une interface
                 if (UIfs.isFighting == true) { //si on est en train de faire un combat
-                    if (UIfs.getFighterB().getHp() <= 0) { //fin du combat (on peut changer)
-                        if (UIfs.getFighterB().getClass().toString().equals("class com.wc.souterrain.Player")) {
-                            if (playerFinalA == null) {
+                    if(UIfs.getFighterB().getHp()<=0){ //fin du combat (on peut changer)
+                        GameClient.sendInformation(UIfs.getFighterA().getName() + " remporte le combat contre : " + UIfs.getFighterB().getName() + ". Il termine son tour.");   
+                        if(UIfs.getFighterB().getClass().toString().equals("class com.wc.souterrain.Player")){
+                            if(playerFinalA==null){
                                 Player p = (Player) UIfs.getFighterA();
                                 playerFinalA = new Player(p);
                                 System.out.println(playerFinalA.getName() + " est le playerFinalA. PlayerFinalA est défini.");
@@ -887,7 +908,7 @@ public class souterrain extends ApplicationAdapter {
         }
     }
 
-    private void InitCharacters() {
+    public void InitCharacters(){
         player1.setName(UIts.nameList.get(0));
         player1.setSprite(new Texture(Gdx.files.internal(UIts.spriteList.get(0))));
         player1.setAI(UIts.addAI.get(0));
@@ -953,8 +974,6 @@ public class souterrain extends ApplicationAdapter {
         camera.position.set(-1500, 2400, 0);
         currentStage = UIss;
         UIss.MoveUI(camera);
-
-        System.out.println(camera.position.x + "      " + camera.position.y);
 
         Gdx.input.setInputProcessor(UIss);
     }

@@ -17,6 +17,7 @@ import com.badlogic.gdx.scenes.scene2d.ui.TextField;
 import com.badlogic.gdx.scenes.scene2d.utils.ClickListener;
 import com.badlogic.gdx.scenes.scene2d.utils.SpriteDrawable;
 import com.badlogic.gdx.utils.viewport.ScreenViewport;
+import java.io.IOException;
 import java.util.ArrayList;
 
 public class TitleScene extends Stage {
@@ -41,6 +42,7 @@ public class TitleScene extends Stage {
     private TextField TFName;
     private Label selectTimeLb;
     public TextField selectTime;
+    public TextField adresseIP;
     private TextButton AIbutton;
     private ImageButton selectSkin1;
     private ImageButton selectSkin2;
@@ -98,12 +100,22 @@ public class TitleScene extends Stage {
         difficileButton = new TextButton("Ia Difficile", skin);
         setTransparent(difficileButton);
         
+        onlineButton = new TextButton("Jouer en ligne", skin);
+        setTransparent(onlineButton);
+        
+        localButton = new TextButton("Jouer en local", skin);
+        setTransparent(localButton);
+        
         TFName = new TextField("",skin);
         TFName.setMessageText("Pseudo");
         setTransparent(TFName);
         
-        selectTime = new TextField("Durée de la partie ",skin);
-        setTransparent(selectTime);
+        adresseIP = new TextField("",skin);
+        setTransparent(adresseIP);
+        adresseIP.setMessageText("Adresse IP du serveur");
+        
+        AIbutton = new TextButton("",skin);
+        setTransparent(AIbutton);
         
         AIbutton = new TextButton("Ajouter une IA",skin);
         setTransparent(AIbutton);
@@ -144,9 +156,10 @@ public class TitleScene extends Stage {
         setTransparent(selectedSkinLb);
         
         creditsLb = new Label("Conception : Arnaud et Simon\n"
-                            + "Developpement : Arnaud et Simon\n"
+                            + "Developpement : Arnaud, Simon et Pierre\n"
                             + "Sprites et Textures : Arnaud\n"
                             + "Gold II sur TFT : Simon\n"
+                            + "Mise en reseau : Pierre\n"
                             + "\n"
                             + "Framework utilise : LibGDX\n"
                             + "Outils utilises : Tiled, Pixelorama, gitlab\n"
@@ -174,17 +187,10 @@ public class TitleScene extends Stage {
                 setTransparent(nomLb);
                 setTransparent(startButton);
                 setTransparent(creditsButton);
-                setTransparent(quitButton);
-                setOpaque(TFName);
-                setOpaque(selectSkin1);
-                setOpaque(selectSkin2);
-                setOpaque(selectSkin3);
-                setOpaque(selectSkin4);
-                setOpaque(selectedSkin);
-                setOpaque(validateButton);
-                setOpaque(entreePseudoLb);
-                setOpaque(selectedSkinLb);    
-                setOpaque(AIbutton);
+                setTransparent(quitButton);    
+                setOpaque(onlineButton);
+                setOpaque(localButton);
+                setOpaque(adresseIP);
             }
         });
         
@@ -203,6 +209,57 @@ public class TitleScene extends Stage {
             @Override
             public void clicked(InputEvent event,float x, float y){
                 System.exit(0);
+            }
+        });
+        
+        onlineButton.addListener(new ClickListener(){
+            @Override
+            public void clicked(InputEvent event,float x, float y){
+                try{
+                    new Thread(new Runnable() {
+                        @Override
+                        public void run() {
+                            GameClient.main(adresseIP.getText());
+                        }
+                    }).start();
+                    setTransparent(onlineButton);
+                    setTransparent(localButton);
+                    setTransparent(adresseIP);
+                    setOpaque(AIbutton);
+                    setOpaque(TFName);
+                    setOpaque(selectSkin1);
+                    setOpaque(selectSkin2);
+                    setOpaque(selectSkin3);
+                    setOpaque(selectSkin4);
+                    setOpaque(selectedSkin);
+                    setOpaque(validateButton);
+                    setOpaque(entreePseudoLb);
+                    setOpaque(selectedSkinLb);
+                }
+                catch (Exception e) {
+                    e.printStackTrace();
+                }
+                
+                
+            }
+        });
+        
+        localButton.addListener(new ClickListener(){
+            @Override
+            public void clicked(InputEvent event,float x, float y){
+                setTransparent(onlineButton);
+                setTransparent(localButton);
+                setTransparent(adresseIP);
+                setOpaque(AIbutton);
+                setOpaque(TFName);
+                setOpaque(selectSkin1);
+                setOpaque(selectSkin2);
+                setOpaque(selectSkin3);
+                setOpaque(selectSkin4);
+                setOpaque(selectedSkin);
+                setOpaque(validateButton);
+                setOpaque(entreePseudoLb);
+                setOpaque(selectedSkinLb);
             }
         });
         
@@ -412,6 +469,10 @@ public class TitleScene extends Stage {
         creditsButton.setPosition(350, 320);
         quitButton.setPosition(350, 240);
         
+        onlineButton.setPosition(250,500);
+        localButton.setPosition(250,300);
+        adresseIP.setPosition(250,600);
+        
         TFName.setPosition(50, 600);
         entreePseudoLb.setPosition(50, 650);
         selectedSkinLb.setPosition(520, 550);
@@ -439,6 +500,7 @@ public class TitleScene extends Stage {
         addActor(interButton);
         addActor(difficileButton);
         addActor(difficulteSelect);
+        addActor(adresseIP);
         addActor(selectedSkin);
         addActor(creditsLb);
         addActor(entreePseudoLb);

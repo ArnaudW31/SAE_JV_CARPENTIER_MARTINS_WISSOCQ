@@ -91,6 +91,8 @@ public class ShopScene extends Stage {
                     currentShopper.addToInventory(pain);
                     currentShopper.setGold(currentShopper.getGold()-10);
                     playerGold.setText(currentShopper.getGold());
+                    GameClient.sendInformation(currentShopper.getName() + " achète 1 pain.");   
+
                 }
                 else{
                     failSound.play();
@@ -106,6 +108,8 @@ public class ShopScene extends Stage {
                     currentShopper.addToInventory(vin);
                     currentShopper.setGold(currentShopper.getGold()-20);
                     playerGold.setText(currentShopper.getGold());
+                    GameClient.sendInformation(currentShopper.getName() + " achète 1 bouteille de vin.");   
+
                 }
                 else{
                     failSound.play();
@@ -121,6 +125,7 @@ public class ShopScene extends Stage {
                     currentShopper.addToInventory(saucisson_de_centaure);
                     currentShopper.setGold(currentShopper.getGold()-30);
                     playerGold.setText(currentShopper.getGold());
+                    GameClient.sendInformation(currentShopper.getName() + " achète 1 saucisson.");   
                 }
                 else{
                     failSound.play();
@@ -132,6 +137,7 @@ public class ShopScene extends Stage {
             @Override
             public void clicked(InputEvent event,float x, float y){
                 isShopping = false;
+                GameClient.sendInformation(currentShopper.getName() + " quitte la boutique");   
             }
         });
         
