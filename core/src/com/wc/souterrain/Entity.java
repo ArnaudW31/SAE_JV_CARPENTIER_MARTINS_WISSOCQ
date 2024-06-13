@@ -23,7 +23,6 @@ public class Entity{
     private int StunStatus;
     private String status;
     private Texture sprite;
-    private boolean isAI;
 
     //constructeur
     public Entity(){
@@ -300,13 +299,5 @@ public class Entity{
         }
         
         return result;
-    }
-    
-    public boolean getAI(){
-        return this.isAI;
-    }
-
-    public void setAI(boolean isAI){
-        this.isAI = isAI;
-    }    
+    }   
 }
