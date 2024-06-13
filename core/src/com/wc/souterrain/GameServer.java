@@ -1,7 +1,5 @@
 package com.wc.souterrain;
 
-
-
 import java.io.*;
 import java.net.*;
 
@@ -18,7 +16,7 @@ public class GameServer {
                 Socket clientSocket = serverSocket.accept();
                 clientCount++;
                 String clientName = "Joueur" + clientCount;
-                System.out.println(clientName + " est connecté.");
+                System.out.println("Le " + clientName + "s'est connecté.");
 
                 // Démarrer un nouveau thread pour gérer le client
                 new ClientHandler(clientSocket, clientName).start();
@@ -50,7 +48,17 @@ class ClientHandler extends Thread {
             String message;
             while ((message = in.readLine()) != null) {
                 System.out.println(clientName + ": " + message);
-                out.println("Message reçu: " + message);
+
+                // Interpréter les messages structurés
+                if (message.startsWith("INFO:")) {
+                    String info = message.substring(5);
+                    // Traiter l'information reçue
+                    System.out.println("Information reçue de " + clientName + ": " + info);
+                    out.println("Information reçue: " + info);
+                } else {
+                    // Traiter les messages standards
+                    out.println("Message reçu: " + message);
+                }
             }
 
         } catch (IOException e) {
@@ -61,7 +69,7 @@ class ClientHandler extends Thread {
             } catch (IOException e) {
                 e.printStackTrace();
             }
-            System.out.println(clientName + " s'est déconnecté.");
+            System.out.println("Le " + clientName + " s'est déconnecté.");
         }
     }
 }
