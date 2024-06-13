@@ -319,11 +319,11 @@ public class FightScene extends Stage {
         //si l'entité est une IA
         if(currentAttacker.getClass().toString().equals("class com.wc.souterrain.Player") && waitforattack == false){
             Player playerAttacker = (Player) currentAttacker;
-            if((playerAttacker.getAI() == 1) && fighterB.getClass().toString().equals("class com.wc.souterrain.Entity")){
+            if((playerAttacker.getAI() == 1)){
                 executeCombatSequenceFaible();
-            }else if((playerAttacker.getAI() == 2) && fighterB.getClass().toString().equals("class com.wc.souterrain.Entity")){
+            }else if((playerAttacker.getAI() == 2)){
                 executeCombatSequenceMoyenne();
-            }else if((playerAttacker.getAI() == 3) && fighterB.getClass().toString().equals("class com.wc.souterrain.Entity")){
+            }else if((playerAttacker.getAI() == 3)){
                 executeCombatSequenceForte();
             }
         }
@@ -353,6 +353,12 @@ public class FightScene extends Stage {
                 }
             }
             waitforattack = true;
+            if(currentAttacker.getClass().toString().equals("class com.wc.souterrain.Player")){
+                Player playerAttacker = (Player) currentAttacker;
+                if(!playerAttacker.getInventory().isEmpty()){
+                    System.out.println(playerAttacker.getInventory().get(0).getName());
+                }
+            }
             FightSequence(currentAttacker, currentAttacker.equals(fighterA) ? fighterB : fighterA, 
                           currentAttacker.equals(fighterA) ? spriteEnnemy1 : spriteEnnemy2, 
                           currentAttacker.equals(fighterA) ? lostHealthF1 : lostHealthF2, 
@@ -400,42 +406,44 @@ public class FightScene extends Stage {
         if (fighterA.getHp() > 0 && fighterB.getHp() > 0) {
             if(currentAttacker.getClass().toString().equals("class com.wc.souterrain.Player")){
                 Player playerAttacker = (Player) currentAttacker;
-                if(!playerAttacker.getInventory().isEmpty() && (playerAttacker.getHp()>=(playerAttacker.getMaxHp()-(50/100)*playerAttacker.getMaxHp()))){
+                if(!playerAttacker.getInventory().isEmpty() && (playerAttacker.getHp() <= ((50/100.0)*playerAttacker.getMaxHp()))){
                     playerAttacker.useInventory(playerAttacker.getInventory().get(0), playerAttacker, (currentAttacker.equals(fighterA) ? fighterB : fighterA));
                 }
             }
             waitforattack = true;
-            Timer.schedule(new Timer.Task() {
-                @Override
-                public void run() {
-                    FightSequence(currentAttacker, currentAttacker.equals(fighterA) ? fighterB : fighterA, 
-                                  currentAttacker.equals(fighterA) ? spriteEnnemy1 : spriteEnnemy2, 
-                                  currentAttacker.equals(fighterA) ? lostHealthF2 : lostHealthF1, 
-                                  currentAttacker.equals(fighterA) ? ennemyHealth2 : ennemyHealth1, 
-                                  currentAttacker.equals(fighterA) ? animF1 : animF2, 
-                                  currentAttacker.equals(fighterA) ? lossF2 : lossF1);
-
-                    currentAttacker = currentAttacker.equals(fighterA) ? fighterB : fighterA;
-
-                    Timer.schedule(new Timer.Task() { 
-                        @Override
-                        public void run() {
-                            waitforattack = false;
-                            if (fighterA.getHp() > 0 && fighterB.getHp() > 0) {
-                                executeCombatSequenceMoyenne(); // Recurse to continue the combat if both are still alive
-                            }
-                        }
-                    }, 2f); // Wait for the animation to complete
+            if(currentAttacker.getClass().toString().equals("class com.wc.souterrain.Player")){
+                Player playerAttacker = (Player) currentAttacker;
+                if(!playerAttacker.getInventory().isEmpty()){
+                    System.out.println(playerAttacker.getInventory().get(0).getName());
                 }
-            }, 2f); // Initial wait before starting the combat
+            }
+            FightSequence(currentAttacker, currentAttacker.equals(fighterA) ? fighterB : fighterA, 
+                          currentAttacker.equals(fighterA) ? spriteEnnemy1 : spriteEnnemy2, 
+                          currentAttacker.equals(fighterA) ? lostHealthF1 : lostHealthF2, 
+                          currentAttacker.equals(fighterA) ? ennemyHealth2 : ennemyHealth1, 
+                          currentAttacker.equals(fighterA) ? animF1 : animF2, 
+                          currentAttacker.equals(fighterA) ? lossF2 : lossF1);
+
+            currentAttacker = currentAttacker.equals(fighterA) ? fighterB : fighterA;
+            if (fighterA.getHp() > 0 && fighterB.getHp() > 0) {
+                Timer.schedule(new Timer.Task() { 
+                    @Override
+                    public void run() {
+                        waitforattack = false;
+                        if (fighterA.getHp() > 0 && fighterB.getHp() > 0) {
+                            executeCombatSequenceMoyenne(); // Recurse to continue the combat if both are still alive
+                        }
+                    }
+                }, 2f); // Wait for the animation to complete
+            }
+
         } else {
             waitforattack = false;
-            // Optionally handle end of combat logic here
             if (fighterA.getHp() <= 0) {
-                System.out.println("Fighter A is dead");
+                System.out.println("Fighter A est mort");
             }
             if (fighterB.getHp() <= 0) {
-                System.out.println("Fighter B is dead");
+                System.out.println("Fighter B est mort");
             }
         }
     }
@@ -462,46 +470,48 @@ public class FightScene extends Stage {
                 if(otherFighter.getClass().toString().equals("class com.wc.souterrain.Player")) {
                     Player otherPlayer = (Player) otherFighter;
 
-                    if(!playerAttacker.getInventory().isEmpty() && (playerAttacker.getHp() >= (playerAttacker.getMaxHp() - (20 / 100.0) * playerAttacker.getMaxHp()))) {
+                    if(!playerAttacker.getInventory().isEmpty() && (playerAttacker.getHp() <= ((80/100.0)*playerAttacker.getMaxHp()))) {
                         playerAttacker.useInventory(playerAttacker.getInventory().get(0), playerAttacker, otherPlayer);
                     }
                 }
-                else if(!playerAttacker.getInventory().isEmpty() && (playerAttacker.getHp()>=(playerAttacker.getMaxHp()-(70/100)*playerAttacker.getMaxHp()))){
+                else if(!playerAttacker.getInventory().isEmpty() && (playerAttacker.getHp()<= ((30/100.0)*playerAttacker.getMaxHp()))){
                     playerAttacker.useInventory(playerAttacker.getInventory().get(0), playerAttacker, (currentAttacker.equals(fighterA) ? fighterB : fighterA));
                 }
             }
             waitforattack = true;
-            Timer.schedule(new Timer.Task() {
-                @Override
-                public void run() {
-                    FightSequence(currentAttacker, currentAttacker.equals(fighterA) ? fighterB : fighterA, 
-                                  currentAttacker.equals(fighterA) ? spriteEnnemy1 : spriteEnnemy2, 
-                                  currentAttacker.equals(fighterA) ? lostHealthF2 : lostHealthF1, 
-                                  currentAttacker.equals(fighterA) ? ennemyHealth2 : ennemyHealth1, 
-                                  currentAttacker.equals(fighterA) ? animF1 : animF2, 
-                                  currentAttacker.equals(fighterA) ? lossF2 : lossF1);
-
-                    currentAttacker = currentAttacker.equals(fighterA) ? fighterB : fighterA;
-
-                    Timer.schedule(new Timer.Task() { 
-                        @Override
-                        public void run() {
-                            waitforattack = false;
-                            if (fighterA.getHp() > 0 && fighterB.getHp() > 0) {
-                                executeCombatSequenceForte(); // Recurse to continue the combat if both are still alive
-                            }
-                        }
-                    }, 2f); // Wait for the animation to complete
+            if(currentAttacker.getClass().toString().equals("class com.wc.souterrain.Player")){
+                Player playerAttacker = (Player) currentAttacker;
+                if(!playerAttacker.getInventory().isEmpty()){
+                    System.out.println(playerAttacker.getInventory().get(0).getName());
                 }
-            }, 2f); // Initial wait before starting the combat
+            }
+            FightSequence(currentAttacker, currentAttacker.equals(fighterA) ? fighterB : fighterA, 
+                          currentAttacker.equals(fighterA) ? spriteEnnemy1 : spriteEnnemy2, 
+                          currentAttacker.equals(fighterA) ? lostHealthF1 : lostHealthF2, 
+                          currentAttacker.equals(fighterA) ? ennemyHealth2 : ennemyHealth1, 
+                          currentAttacker.equals(fighterA) ? animF1 : animF2, 
+                          currentAttacker.equals(fighterA) ? lossF2 : lossF1);
+
+            currentAttacker = currentAttacker.equals(fighterA) ? fighterB : fighterA;
+            if (fighterA.getHp() > 0 && fighterB.getHp() > 0) {
+                Timer.schedule(new Timer.Task() { 
+                    @Override
+                    public void run() {
+                        waitforattack = false;
+                        if (fighterA.getHp() > 0 && fighterB.getHp() > 0) {
+                            executeCombatSequenceForte(); // Recurse to continue the combat if both are still alive
+                        }
+                    }
+                }, 2f); // Wait for the animation to complete
+            }
+
         } else {
             waitforattack = false;
-            // Optionally handle end of combat logic here
             if (fighterA.getHp() <= 0) {
-                System.out.println("Fighter A is dead");
+                System.out.println("Fighter A est mort");
             }
             if (fighterB.getHp() <= 0) {
-                System.out.println("Fighter B is dead");
+                System.out.println("Fighter B est mort");
             }
         }
     }

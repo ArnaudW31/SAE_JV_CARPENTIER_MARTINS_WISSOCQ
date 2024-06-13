@@ -502,10 +502,8 @@ public class souterrain extends ApplicationAdapter {
                 }
                 camera.position.set(posPlayer.x, posPlayer.y, 0);
                 UImp.MoveUI(camera);
-                System.out.println("pas dans interface");
 
             } else if(inInterface) { //si on est dans une interface
-                System.out.println("Dans interface");
                 if (UIfs.isFighting == true) { //si on est en train de faire un combat
                     if (UIfs.getFighterB().getHp() <= 0) { //fin du combat (on peut changer)
                         if (UIfs.getFighterB().getClass().toString().equals("class com.wc.souterrain.Player")) {
