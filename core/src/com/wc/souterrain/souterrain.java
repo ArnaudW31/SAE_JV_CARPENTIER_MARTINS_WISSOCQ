@@ -94,15 +94,15 @@ public class souterrain extends ApplicationAdapter {
     int troisiemeCbtArene = 0;
     int finalCbtArene = 0;
 
-    @Override
-    public void create() {
+    public  void create () {
         //gestion du jeu
         Consommable pain = new Consommable();
         pain.setName("Pain");
         player1 = new Player();
-        spawn1 = new Case(32, 25, "vert");
+        spawn1 = new Case(32,25,"vert");
         player1.setPosition(spawn1);
         player1.addToInventory(pain);
+
 
         player2 = new Player();
         spawn2 = new Case(14, 25, "vert");

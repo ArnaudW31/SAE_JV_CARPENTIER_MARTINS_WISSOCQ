@@ -33,6 +33,11 @@ public class TitleScene extends Stage {
     private TextButton startButton;
     private TextButton creditsButton;
     private TextButton quitButton;
+    private TextButton onlineButton;
+    private TextButton localButton;
+    private TextButton facileButton;
+    private TextButton interButton;
+    private TextButton difficileButton;
     private TextField TFName;
     private Label selectTimeLb;
     public TextField selectTime;
@@ -42,6 +47,7 @@ public class TitleScene extends Stage {
     private ImageButton selectSkin3;
     private ImageButton selectSkin4;
     private Image selectedSkin;
+    private Image difficulteSelect;
     private ImageButton validateButton;
     private Label creditsLb;
     private ImageButton returnButton;
@@ -75,6 +81,20 @@ public class TitleScene extends Stage {
         //setTransparent(creditsButton);
         quitButton = new TextButton("Quitter", skin);
         //setTransparent(quitButton);
+        onlineButton = new TextButton("Jouer en ligne", skin);
+        setTransparent(onlineButton);
+        
+        localButton = new TextButton("Jouer en local", skin);
+        setTransparent(localButton);
+        
+        facileButton = new TextButton("Ia Facile", skin);
+        setTransparent(facileButton);
+        
+        interButton = new TextButton("Ia Moyenne", skin);
+        setTransparent(interButton);
+        
+        difficileButton = new TextButton("Ia Difficile", skin);
+        setTransparent(difficileButton);
         
         TFName = new TextField("",skin);
         TFName.setMessageText("Pseudo");
@@ -109,6 +129,10 @@ public class TitleScene extends Stage {
         selectedSkin = new Image(new Texture (Gdx.files.internal("bones.png")));
         setTransparent(selectedSkin);
         selectedSkin.setBounds(50, 200, 128, 256);
+        
+        difficulteSelect = new Image(new Texture (Gdx.files.internal("tick.png")));
+        setTransparent(difficulteSelect);
+        selectedSkin.setBounds(50, 200, 32, 32);
         
         validateButton = new ImageButton(new SpriteDrawable(new Sprite(new Texture (Gdx.files.internal("arrow.png")))));
         setTransparent(validateButton);
@@ -352,6 +376,12 @@ public class TitleScene extends Stage {
         addActor(startButton);
         addActor(creditsButton);
         addActor(quitButton);
+        addActor(onlineButton);
+        addActor(localButton);
+        addActor(facileButton);
+        addActor(interButton);
+        addActor(difficileButton);
+        addActor(difficulteSelect);
         addActor(selectedSkin);
         addActor(creditsLb);
         addActor(entreePseudoLb);
