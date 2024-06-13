@@ -33,14 +33,21 @@ public class TitleScene extends Stage {
     private TextButton startButton;
     private TextButton creditsButton;
     private TextButton quitButton;
+    private TextButton onlineButton;
+    private TextButton localButton;
+    private TextButton facileButton;
+    private TextButton interButton;
+    private TextButton difficileButton;
     private TextField TFName;
     private Label selectTimeLb;
     public TextField selectTime;
+    private TextButton AIbutton;
     private ImageButton selectSkin1;
     private ImageButton selectSkin2;
     private ImageButton selectSkin3;
     private ImageButton selectSkin4;
     private Image selectedSkin;
+    private Image difficulteSelect;
     private ImageButton validateButton;
     private Label creditsLb;
     private ImageButton returnButton;
@@ -49,19 +56,24 @@ public class TitleScene extends Stage {
     private Label selectedSkinLb;
     public boolean finished;
     public boolean init;
+    private int iaDifficulte;
+    public ArrayList<Integer> addAI;
+    public boolean buttonAIclicked;
     public ArrayList<String> spriteList;
     public ArrayList<String> nameList;
     public int clickedSkin;
+    private Skin skin;
     
     public TitleScene(Camera camera){
         super(new ScreenViewport(camera));
         
-        Skin skin = new Skin(Gdx.files.internal("font/skinfile.json"));
+        skin = new Skin(Gdx.files.internal("font/skinfile.json"));
         
         spriteList = new ArrayList<>();
         nameList = new ArrayList<>();
         clickedSkin = 0;
         init = false;
+        addAI = new ArrayList<Integer>();
         
         nomLb = new Label("Le souterrain des Heros", skin);
         
@@ -71,6 +83,20 @@ public class TitleScene extends Stage {
         //setTransparent(creditsButton);
         quitButton = new TextButton("Quitter", skin);
         //setTransparent(quitButton);
+        onlineButton = new TextButton("Jouer en ligne", skin);
+        setTransparent(onlineButton);
+        
+        localButton = new TextButton("Jouer en local", skin);
+        setTransparent(localButton);
+        
+        facileButton = new TextButton("Ia Facile", skin);
+        setTransparent(facileButton);
+        
+        interButton = new TextButton("Ia Moyenne", skin);
+        setTransparent(interButton);
+        
+        difficileButton = new TextButton("Ia Difficile", skin);
+        setTransparent(difficileButton);
         
         TFName = new TextField("",skin);
         TFName.setMessageText("Pseudo");
@@ -78,6 +104,9 @@ public class TitleScene extends Stage {
         
         selectTime = new TextField("Durée de la partie ",skin);
         setTransparent(selectTime);
+        
+        AIbutton = new TextButton("Ajouter une IA",skin);
+        setTransparent(AIbutton);
         
         selectSkin1=new ImageButton(new SpriteDrawable(new Sprite(new Texture (Gdx.files.internal("bonorme.png")))));
         setTransparent(selectSkin1);
@@ -102,6 +131,10 @@ public class TitleScene extends Stage {
         selectedSkin = new Image(new Texture (Gdx.files.internal("bones.png")));
         setTransparent(selectedSkin);
         selectedSkin.setBounds(50, 200, 128, 256);
+        
+        difficulteSelect = new Image(new Texture (Gdx.files.internal("tick.png")));
+        setTransparent(difficulteSelect);
+        difficulteSelect.setBounds(50, 200, 32, 32);
         
         validateButton = new ImageButton(new SpriteDrawable(new Sprite(new Texture (Gdx.files.internal("arrow.png")))));
         setTransparent(validateButton);
@@ -151,6 +184,7 @@ public class TitleScene extends Stage {
                 setOpaque(validateButton);
                 setOpaque(entreePseudoLb);
                 setOpaque(selectedSkinLb);    
+                setOpaque(AIbutton);
             }
         });
         
@@ -212,6 +246,55 @@ public class TitleScene extends Stage {
             }
         });
         
+        AIbutton.addListener(new ClickListener(){
+            @Override
+            public void clicked(InputEvent event,float x, float y){
+                if(buttonAIclicked){
+                    setTransparent(facileButton);
+                    setTransparent(interButton);
+                    setTransparent(difficileButton);
+                    setTransparent(difficulteSelect);
+                    buttonAIclicked = false;
+                    
+                }
+                else{
+                    setOpaque(facileButton);
+                    setOpaque(interButton);
+                    setOpaque(difficileButton);
+                    setOpaque(difficulteSelect);
+                    buttonAIclicked = true;
+                }
+                
+            }
+        });
+        
+        facileButton.addListener(new ClickListener(){
+            @Override
+            public void clicked(InputEvent event,float x, float y){
+                iaDifficulte = 1;
+                difficulteSelect.setPosition(550,750);
+                
+            }
+        });
+        
+        interButton.addListener(new ClickListener(){
+            @Override
+            public void clicked(InputEvent event,float x, float y){
+                iaDifficulte = 2;
+                difficulteSelect.setPosition(550,700);
+                
+            }
+        });
+        
+        difficileButton.addListener(new ClickListener(){
+            @Override
+            public void clicked(InputEvent event,float x, float y){
+                iaDifficulte = 3;
+                difficulteSelect.setPosition(550,650);
+                
+            }
+        });
+        
         validateButton.addListener(new ClickListener(){
             @Override
             public void clicked(InputEvent event,float x, float y){
@@ -241,11 +324,23 @@ public class TitleScene extends Stage {
                             selectSkin4.getImage().setColor(0.2f, 0.2f, 0.2f, 0.9f);
                             break;
                     }
+                    addAI.add(iaDifficulte);
+                    setTransparent(facileButton);
+                    setTransparent(interButton);
+                    setTransparent(difficileButton);
+                    setTransparent(difficulteSelect);
+                    iaDifficulte = 0;
+                    difficulteSelect.setPosition(550,750);
+                    buttonAIclicked = false;
                     clickedSkin = 0;
                     selectedSkin.setDrawable(new SpriteDrawable(new Sprite(new Texture (Gdx.files.internal("bones.png")))));
                     selectedSkin.setBounds(50, 200, 128, 256);
                     nameList.add(TFName.getText());
-                    TFName.setText("Pseudo");
+                    TFName.addAction(Actions.removeActor());
+                    TFName = new TextField("",skin);
+                    TFName.setMessageText("Pseudo");
+                    TFName.setPosition(50, 600);
+                    addActor(TFName);
                     
                     if(spriteList.size()==4){
                         setTransparent(TFName);
@@ -257,6 +352,7 @@ public class TitleScene extends Stage {
                         setTransparent(validateButton);
                         setTransparent(entreePseudoLb);
                         setTransparent(selectedSkinLb);
+                        setTransparent(AIbutton);
                         setOpaque(selectTime);
                         setOpaque(selectTimeLb);
                         setOpaque(returnTimeButton);
@@ -271,6 +367,10 @@ public class TitleScene extends Stage {
                     nameList.add("Mama");
                     nameList.add("Mimi");
                     nameList.add("Mumu");
+                    addAI.add(1);
+                    addAI.add(1);
+                    addAI.add(0);
+                    addAI.add(0);
                     setTransparent(TFName);
                     setTransparent(selectSkin1);
                     setTransparent(selectSkin2);
@@ -280,6 +380,7 @@ public class TitleScene extends Stage {
                     setTransparent(validateButton);
                     setTransparent(entreePseudoLb);
                     setTransparent(selectedSkinLb);
+                    setTransparent(AIbutton);
                     setOpaque(selectTime);
                     setOpaque(selectTimeLb);
                     setOpaque(returnTimeButton);
@@ -318,6 +419,10 @@ public class TitleScene extends Stage {
         creditsLb.setPosition(50, 150);
         returnButton.setPosition(700, 700);
         
+        AIbutton.setPosition(650,600);
+        facileButton.setPosition(650,750);
+        interButton.setPosition(650,700);
+        difficileButton.setPosition(650,650);
         selectTime.setPosition(350,400);
         selectTimeLb.setPosition(350, 300);
         returnTimeButton.setPosition(600,100);
@@ -328,11 +433,18 @@ public class TitleScene extends Stage {
         addActor(startButton);
         addActor(creditsButton);
         addActor(quitButton);
+        addActor(onlineButton);
+        addActor(localButton);
+        addActor(facileButton);
+        addActor(interButton);
+        addActor(difficileButton);
+        addActor(difficulteSelect);
         addActor(selectedSkin);
         addActor(creditsLb);
         addActor(entreePseudoLb);
         addActor(selectedSkinLb);
         addActor(TFName);
+        addActor(AIbutton);
         addActor(selectTime);
         addActor(selectSkin1);
         addActor(selectSkin2);

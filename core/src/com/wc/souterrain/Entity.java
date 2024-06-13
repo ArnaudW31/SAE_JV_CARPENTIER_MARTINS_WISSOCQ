@@ -299,5 +299,5 @@ public class Entity{
         }
         
         return result;
-    }
+    }   
 }
