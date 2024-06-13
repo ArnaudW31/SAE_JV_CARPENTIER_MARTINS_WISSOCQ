@@ -525,7 +525,8 @@ public class souterrain extends ApplicationAdapter {
             } else if(inInterface) { //si on est dans une interface
                 if (UIfs.isFighting == true) { //si on est en train de faire un combat
                     if(UIfs.getFighterB().getHp()<=0){ //fin du combat (on peut changer)
-                        GameClient.sendInformation(UIfs.getFighterA().getName() + " remporte le combat contre : " + UIfs.getFighterB().getName() + ". Il termine son tour.");   
+                        if(GameClient.SERVER_ADDRESS != null)
+                            GameClient.sendInformation(UIfs.getFighterA().getName() + " remporte le combat contre : " + UIfs.getFighterB().getName() + ". Il termine son tour.");   
                         if(UIfs.getFighterB().getClass().toString().equals("class com.wc.souterrain.Player")){
                             if(playerFinalA==null){
                                 Player p = (Player) UIfs.getFighterA();

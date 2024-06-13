@@ -153,7 +153,8 @@ public class MapScene extends Stage {
                     pl.setDmg(pl.getDmg()+15);
                     pl.setPierceArmor(25);
                     this.updateStats(pl.getDmg(),pl.getDef(),pl.getCrit() , pl.getSpeed(), pl.getPrecision(), pl.getGold(),"trident");
-                    GameClient.sendInformation(pl.getName() + " Obtient : Trident");  
+                    if(GameClient.SERVER_ADDRESS != null)
+                        GameClient.sendInformation(pl.getName() + " Obtient : Trident");  
                     break;
 
                 case "bident":
@@ -163,7 +164,8 @@ public class MapScene extends Stage {
                     pl.setInstantKillChance(3);
                     pl.setCrit(40);
                     this.updateStats(pl.getDmg(),pl.getDef(),pl.getCrit() , pl.getSpeed(), pl.getPrecision(), pl.getGold(),"bident");
-                    GameClient.sendInformation(pl.getName() + " Obtient : Bident");                
+                    if(GameClient.SERVER_ADDRESS != null)
+                        GameClient.sendInformation(pl.getName() + " Obtient : Bident");                
                     break;
                     
                 case "shield":
@@ -173,7 +175,8 @@ public class MapScene extends Stage {
                     pl.setDef(pl.getDef()+50);
                     pl.setReflectChance(15);
                     this.updateStats(pl.getDmg(),pl.getDef(),pl.getCrit() , pl.getSpeed(), pl.getPrecision(), pl.getGold(),"shield");
-                    GameClient.sendInformation(pl.getName() + " Obtient : Bouclier");                 
+                    if(GameClient.SERVER_ADDRESS != null)
+                        GameClient.sendInformation(pl.getName() + " Obtient : Bouclier");                 
                     break;
                     
                 case "dague":
@@ -183,7 +186,8 @@ public class MapScene extends Stage {
                     pl.setSpeed(pl.getSpeed()+50);
                     pl.setCrit(20);
                     this.updateStats(pl.getDmg(),pl.getDef(),pl.getCrit() , pl.getSpeed(), pl.getPrecision(), pl.getGold(),"dague");
-                    GameClient.sendInformation(pl.getName() + " Obtient : Dague");                 
+                    if(GameClient.SERVER_ADDRESS != null)
+                        GameClient.sendInformation(pl.getName() + " Obtient : Dague");                 
                     break;
             }
         }
