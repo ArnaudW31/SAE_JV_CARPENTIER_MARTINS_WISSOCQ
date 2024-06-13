@@ -315,7 +315,7 @@ public class souterrain extends ApplicationAdapter {
                 }
             }
 
-            if (!inInterface && !currentPlayer.getAI()) {
+            if (!inInterface && currentPlayer.getAI()==0) {
                 //System.out.println("pas ia");
                 if (Gdx.input.isKeyPressed(Keys.RIGHT) && !seDeplace) {
                     Case nextPos = new Case(currentPlayer.getPosition().getX() + 6, currentPlayer.getPosition().getY(), ""); //on calcule la case d'arrivée
@@ -409,7 +409,7 @@ public class souterrain extends ApplicationAdapter {
                 //System.out.println(posPlayer.x+"    "+posPlayer.y);
                 camera.position.set(posPlayer.x, posPlayer.y, 0);
                 UImp.MoveUI(camera);
-            } else if (currentPlayer.getAI() && !seDeplace && !inInterface) {
+                } else if ((currentPlayer.getAI() == 1 || currentPlayer.getAI() == 2 || currentPlayer.getAI() == 3) && !seDeplace && !inInterface) {
                 if (!seDeplace) {
                     System.out.println("ia");
                     Random random = new Random();
