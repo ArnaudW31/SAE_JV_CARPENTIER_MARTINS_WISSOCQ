@@ -202,6 +202,32 @@ public class FightScene extends Stage {
                         else{
                             System.out.println("Le monstre est mort");
                         }
+                    }else if(currentAttacker.getClass().toString().equals("class com.wc.souterrain.Player")){
+                        Player playerAttacker = (Player) currentAttacker;
+
+                        if(playerAttacker.getAI()!=0){
+                            if(currentAttacker.getHp()>0){
+                                waitforattack = true;
+                                Timer.schedule(new Timer.Task() {
+                                    @Override
+                                    public void run() { //fighterB est toujours le monstre si c'est pas un joueur
+                                        FightSequence(fighterB, fighterA,spriteEnnemy2,lostHealthF2,ennemyHealth1,animF2,lossF2);
+                                        currentAttacker = fighterA;
+
+                                        Timer.schedule(new Timer.Task() { //on attend la fin de l'animation
+                                            @Override
+                                            public void run(){
+                                                waitforattack = false;
+                                            }
+                                        }
+                                        ,2f);
+                                    }
+                                },2f);
+                            }
+                            else{
+                                System.out.println("Le monstre est mort");
+                            }
+                        }
                     }
                 }
             }
