@@ -56,16 +56,18 @@ public class TitleScene extends Stage {
     private Label selectedSkinLb;
     public boolean finished;
     public boolean init;
+    private int iaDifficulte;
     public ArrayList<Boolean> addAI;
     public boolean buttonAIclicked;
     public ArrayList<String> spriteList;
     public ArrayList<String> nameList;
     public int clickedSkin;
+    private Skin skin;
     
     public TitleScene(Camera camera){
         super(new ScreenViewport(camera));
         
-        Skin skin = new Skin(Gdx.files.internal("font/skinfile.json"));
+        skin = new Skin(Gdx.files.internal("font/skinfile.json"));
         
         spriteList = new ArrayList<>();
         nameList = new ArrayList<>();
@@ -132,7 +134,7 @@ public class TitleScene extends Stage {
         
         difficulteSelect = new Image(new Texture (Gdx.files.internal("tick.png")));
         setTransparent(difficulteSelect);
-        selectedSkin.setBounds(50, 200, 32, 32);
+        difficulteSelect.setBounds(50, 200, 32, 32);
         
         validateButton = new ImageButton(new SpriteDrawable(new Sprite(new Texture (Gdx.files.internal("arrow.png")))));
         setTransparent(validateButton);
@@ -247,7 +249,49 @@ public class TitleScene extends Stage {
         AIbutton.addListener(new ClickListener(){
             @Override
             public void clicked(InputEvent event,float x, float y){
-                buttonAIclicked = !buttonAIclicked;
+                if(buttonAIclicked){
+                    setTransparent(facileButton);
+                    setTransparent(interButton);
+                    setTransparent(difficileButton);
+                    setTransparent(difficulteSelect);
+                    buttonAIclicked = false;
+                    
+                }
+                else{
+                    setOpaque(facileButton);
+                    setOpaque(interButton);
+                    setOpaque(difficileButton);
+                    setOpaque(difficulteSelect);
+                    buttonAIclicked = true;
+                }
+                
+            }
+        });
+        
+        facileButton.addListener(new ClickListener(){
+            @Override
+            public void clicked(InputEvent event,float x, float y){
+                iaDifficulte = 1;
+                difficulteSelect.setPosition(550,750);
+                
+            }
+        });
+        
+        interButton.addListener(new ClickListener(){
+            @Override
+            public void clicked(InputEvent event,float x, float y){
+                iaDifficulte = 2;
+                difficulteSelect.setPosition(550,700);
+                
+            }
+        });
+        
+        difficileButton.addListener(new ClickListener(){
+            @Override
+            public void clicked(InputEvent event,float x, float y){
+                iaDifficulte = 3;
+                difficulteSelect.setPosition(550,650);
+                
             }
         });
         
@@ -280,13 +324,24 @@ public class TitleScene extends Stage {
                             selectSkin4.getImage().setColor(0.2f, 0.2f, 0.2f, 0.9f);
                             break;
                     }
+                    System.out.println(iaDifficulte);
                     addAI.add(buttonAIclicked);
+                    setTransparent(facileButton);
+                    setTransparent(interButton);
+                    setTransparent(difficileButton);
+                    setTransparent(difficulteSelect);
+                    iaDifficulte = 0;
+                    difficulteSelect.setPosition(550,750);
                     buttonAIclicked = false;
                     clickedSkin = 0;
                     selectedSkin.setDrawable(new SpriteDrawable(new Sprite(new Texture (Gdx.files.internal("bones.png")))));
                     selectedSkin.setBounds(50, 200, 128, 256);
                     nameList.add(TFName.getText());
-                    TFName.setText("Pseudo");
+                    TFName.addAction(Actions.removeActor());
+                    TFName = new TextField("",skin);
+                    TFName.setMessageText("Pseudo");
+                    TFName.setPosition(50, 600);
+                    addActor(TFName);
                     
                     if(spriteList.size()==4){
                         setTransparent(TFName);
@@ -366,6 +421,9 @@ public class TitleScene extends Stage {
         returnButton.setPosition(700, 700);
         
         AIbutton.setPosition(650,600);
+        facileButton.setPosition(650,750);
+        interButton.setPosition(650,700);
+        difficileButton.setPosition(650,650);
         selectTime.setPosition(350,400);
         selectTimeLb.setPosition(350, 300);
         returnTimeButton.setPosition(600,100);

@@ -288,7 +288,6 @@ public class FightScene extends Stage {
         
         //lostHealthF1.setColor(1, 0, 0, 1);
         
-        
         addActor(useWeapon);
         addActor(useConsommable);
         addActor(spriteEnnemy1);
