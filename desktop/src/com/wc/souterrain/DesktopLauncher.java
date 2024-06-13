@@ -6,12 +6,12 @@ import com.badlogic.gdx.backends.lwjgl3.Lwjgl3ApplicationConfiguration;
 public class DesktopLauncher {
     public static void main(String[] arg) {
         // Démarrer le serveur dans un nouveau thread
-        new Thread(new Runnable() {
-            @Override
-            public void run() {
-                GameClient.main(new String[0]);
-            }
-        }).start();
+//        new Thread(new Runnable() {
+//            @Override
+//            public void run() {
+//                GameClient.main(new String[0]);
+//            }
+//        }).start();
 
         // Configuration et lancement de l'application
         Lwjgl3ApplicationConfiguration config = new Lwjgl3ApplicationConfiguration();

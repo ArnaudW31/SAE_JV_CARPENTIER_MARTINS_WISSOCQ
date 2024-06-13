@@ -151,6 +151,8 @@ public class TitleScene extends Stage {
                 setTransparent(startButton);
                 setTransparent(creditsButton);
                 setTransparent(quitButton);
+                setOpaque(onlineButton);
+                setOpaque(localButton);
                     
             }
         });
