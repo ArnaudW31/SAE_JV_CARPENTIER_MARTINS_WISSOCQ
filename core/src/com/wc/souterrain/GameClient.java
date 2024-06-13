@@ -7,10 +7,12 @@ public class GameClient {
 
     private static final String SERVER_ADDRESS = "localhost";
     private static final int SERVER_PORT = 12345;
+    private static PrintWriter out;
 
     public static void main(String[] args) {
-        try (Socket socket = new Socket(SERVER_ADDRESS, SERVER_PORT); BufferedReader in = new BufferedReader(new InputStreamReader(socket.getInputStream())); PrintWriter out = new PrintWriter(socket.getOutputStream(), true); BufferedReader consoleInput = new BufferedReader(new InputStreamReader(System.in))) {
+        try (Socket socket = new Socket(SERVER_ADDRESS, SERVER_PORT); BufferedReader in = new BufferedReader(new InputStreamReader(socket.getInputStream())); PrintWriter newOut = new PrintWriter(socket.getOutputStream(), true); BufferedReader consoleInput = new BufferedReader(new InputStreamReader(System.in))) {
 
+            out = newOut;
             System.out.println("Connecté au serveur. " + in.readLine());
 
             String userInput;
@@ -19,7 +21,7 @@ public class GameClient {
                 if (userInput.startsWith("send")) {
                     String[] parts = userInput.split(" ", 2);
                     if (parts.length > 1) {
-                        sendInformation(out, parts[1]);
+                        sendInformation(parts[1]);
                     } else {
                         System.out.println("Usage: send <information>");
                     }                  
@@ -38,7 +40,7 @@ public class GameClient {
         }
     }
 
-    private static void sendInformation(PrintWriter out, String information) {
+    public static void sendInformation(String information) {
         // Structure your message
         String structuredMessage = "INFO:" + information;
         out.println(structuredMessage);

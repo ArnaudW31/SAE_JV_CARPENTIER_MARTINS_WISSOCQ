@@ -317,6 +317,7 @@ public class FightScene extends Stage {
     private void FightSequence(Entity attacker, Entity defender, //attaquant et defenseur
             Image spriteAttacker, Label lostHealthDefender, Label defenderHealth, SequenceAction animAttacker, ParallelAction lossDefender ){ //leurs animations
         int degat = attacker.attack(defender);
+        GameClient.sendInformation(Integer.toString(degat));
         lostHealthDefender.setText(degat);
         Integer fighterhp = defender.getHp();
         defenderHealth.setText(fighterhp.toString());
