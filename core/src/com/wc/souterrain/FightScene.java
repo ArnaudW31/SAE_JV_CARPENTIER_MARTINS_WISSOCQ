@@ -346,13 +346,19 @@ public class FightScene extends Stage {
         lossF2.restart();
         useConsommable.setDisabled(true);
         if (fighterA.getHp() > 0 && fighterB.getHp() > 0) {
+            if(currentAttacker.getClass().toString().equals("class com.wc.souterrain.Player")){
+                Player playerAttacker = (Player) currentAttacker;
+                if(!playerAttacker.getInventory().isEmpty() && (playerAttacker.getHp()!=playerAttacker.getMaxHp())){
+                    playerAttacker.useInventory(playerAttacker.getInventory().get(0), playerAttacker, (currentAttacker.equals(fighterA) ? fighterB : fighterA));
+                }
+            }
             waitforattack = true;
             Timer.schedule(new Timer.Task() {
                 @Override
                 public void run() {
                     FightSequence(currentAttacker, currentAttacker.equals(fighterA) ? fighterB : fighterA, 
                                   currentAttacker.equals(fighterA) ? spriteEnnemy1 : spriteEnnemy2, 
-                                  currentAttacker.equals(fighterA) ? lostHealthF2 : lostHealthF1, 
+                                  currentAttacker.equals(fighterA) ? lostHealthF1 : lostHealthF2, 
                                   currentAttacker.equals(fighterA) ? ennemyHealth2 : ennemyHealth1, 
                                   currentAttacker.equals(fighterA) ? animF1 : animF2, 
                                   currentAttacker.equals(fighterA) ? lossF2 : lossF1);
@@ -372,12 +378,11 @@ public class FightScene extends Stage {
             }, 2f); // Initial wait before starting the combat
         } else {
             waitforattack = false;
-            // Optionally handle end of combat logic here
             if (fighterA.getHp() <= 0) {
-                System.out.println("Fighter A is dead");
+                System.out.println("Fighter A est mort");
             }
             if (fighterB.getHp() <= 0) {
-                System.out.println("Fighter B is dead");
+                System.out.println("Fighter B est mort");
             }
         }
     }
@@ -396,6 +401,12 @@ public class FightScene extends Stage {
         lossF2.restart();
         useConsommable.setDisabled(true);
         if (fighterA.getHp() > 0 && fighterB.getHp() > 0) {
+            if(currentAttacker.getClass().toString().equals("class com.wc.souterrain.Player")){
+                Player playerAttacker = (Player) currentAttacker;
+                if(!playerAttacker.getInventory().isEmpty() && (playerAttacker.getHp()>=(playerAttacker.getMaxHp()-(50/100)*playerAttacker.getMaxHp()))){
+                    playerAttacker.useInventory(playerAttacker.getInventory().get(0), playerAttacker, (currentAttacker.equals(fighterA) ? fighterB : fighterA));
+                }
+            }
             waitforattack = true;
             Timer.schedule(new Timer.Task() {
                 @Override
@@ -446,6 +457,22 @@ public class FightScene extends Stage {
         lossF2.restart();
         useConsommable.setDisabled(true);
         if (fighterA.getHp() > 0 && fighterB.getHp() > 0) {
+            if(currentAttacker.getClass().toString().equals("class com.wc.souterrain.Player")){
+                Player playerAttacker = (Player) currentAttacker;
+                Object otherFighter = (currentAttacker.equals(fighterA) ? fighterB : fighterA);
+
+                // Vérifier si l'autre combattant est un joueur
+                if(otherFighter.getClass().toString().equals("class com.wc.souterrain.Player")) {
+                    Player otherPlayer = (Player) otherFighter;
+
+                    if(!playerAttacker.getInventory().isEmpty() && (playerAttacker.getHp() >= (playerAttacker.getMaxHp() - (20 / 100.0) * playerAttacker.getMaxHp()))) {
+                        playerAttacker.useInventory(playerAttacker.getInventory().get(0), playerAttacker, otherPlayer);
+                    }
+                }
+                else if(!playerAttacker.getInventory().isEmpty() && (playerAttacker.getHp()>=(playerAttacker.getMaxHp()-(70/100)*playerAttacker.getMaxHp()))){
+                    playerAttacker.useInventory(playerAttacker.getInventory().get(0), playerAttacker, (currentAttacker.equals(fighterA) ? fighterB : fighterA));
+                }
+            }
             waitforattack = true;
             Timer.schedule(new Timer.Task() {
                 @Override
