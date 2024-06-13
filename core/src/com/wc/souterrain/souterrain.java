@@ -411,7 +411,6 @@ public class souterrain extends ApplicationAdapter {
                 UImp.MoveUI(camera);
             } else if ((currentPlayer.getAI() == 1 || currentPlayer.getAI() == 2 || currentPlayer.getAI() == 3) && !seDeplace && !inInterface) {
                 if (!seDeplace) {
-                    System.out.println("ia");
                     Random random = new Random();
                     int chance = random.nextInt(4);
                     Case nextPos;

@@ -14,6 +14,7 @@ import com.badlogic.gdx.scenes.scene2d.ui.Skin;
 import com.badlogic.gdx.scenes.scene2d.utils.ClickListener;
 import com.badlogic.gdx.scenes.scene2d.utils.SpriteDrawable;
 import com.badlogic.gdx.utils.viewport.ScreenViewport;
+import java.util.Random;
 
 public class ShopScene extends Stage {
     
@@ -133,6 +134,40 @@ public class ShopScene extends Stage {
                 isShopping = false;
             }
         });
+        
+        if(currentShopper.getAI()>0){
+            while(currentShopper.getGold()>=10){
+                Random random = new Random();
+                int chance = random.nextInt(3);
+                switch (chance) {
+                    case 0:
+                        if(currentShopper.getGold()>=10){
+                            buySound.play();
+                            currentShopper.addToInventory(pain);
+                            currentShopper.setGold(currentShopper.getGold()-10);
+                            playerGold.setText(currentShopper.getGold());
+                        }
+                        break;
+                    case 1:
+                        if(currentShopper.getGold()>=20){
+                            buySound.play();
+                            currentShopper.addToInventory(vin);
+                            currentShopper.setGold(currentShopper.getGold()-20);
+                            playerGold.setText(currentShopper.getGold());
+                        }
+                        break;
+                    case 2:
+                        if(currentShopper.getGold()>=30){
+                            buySound.play();
+                            currentShopper.addToInventory(saucisson_de_centaure);
+                            currentShopper.setGold(currentShopper.getGold()-30);
+                            playerGold.setText(currentShopper.getGold());
+                        }
+                        break;
+                }
+            }
+            isShopping = false;
+        }
         
         addActor(breadImg);
         addActor(bPriceLbl);
