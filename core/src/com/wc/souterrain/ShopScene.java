@@ -136,7 +136,7 @@ public class ShopScene extends Stage {
         });
         
         if(currentShopper.getAI()>0){
-            while(currentShopper.getGold()>=10){
+            while(currentShopper.getGold()!=0){
                 Random random = new Random();
                 int chance = random.nextInt(3);
                 switch (chance) {

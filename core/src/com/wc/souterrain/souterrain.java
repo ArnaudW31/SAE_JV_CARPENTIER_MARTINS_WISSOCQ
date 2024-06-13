@@ -444,7 +444,7 @@ public class souterrain extends ApplicationAdapter {
                                     direction = "haut";
                                     posPlayer.x = currentPlayer.getPosition().getX() * 32 + currentPlayer.getPosition().getY() * 32;
                                     posPlayer.y = currentPlayer.getPosition().getY() * 16 - currentPlayer.getPosition().getX() * 16 + 40;
-                                    currentPlayer.setPosition(new Case(currentPlayer.getPosition().getX(), currentPlayer.getPosition().getY() + 6, ""));
+                                    currentPlayer.setPosition(nextPos);
                                     walkSound.play(9);
                                     Timer.schedule(new Timer.Task() { //on crée un timer qui s'exécutera 0.5 secondes après
                                         @Override
@@ -464,7 +464,7 @@ public class souterrain extends ApplicationAdapter {
                                     direction = "gauche";
                                     posPlayer.x = currentPlayer.getPosition().getX() * 32 + currentPlayer.getPosition().getY() * 32;
                                     posPlayer.y = currentPlayer.getPosition().getY() * 16 - currentPlayer.getPosition().getX() * 16 + 40;
-                                    currentPlayer.setPosition(new Case(currentPlayer.getPosition().getX() - 6, currentPlayer.getPosition().getY(), ""));
+                                    currentPlayer.setPosition(nextPos);
                                     walkSound.play(9);
                                     Timer.schedule(new Timer.Task() { //on crée un timer qui s'exécutera 0.5 secondes après
                                         @Override
@@ -484,7 +484,7 @@ public class souterrain extends ApplicationAdapter {
                                     direction = "droite";
                                     posPlayer.x = currentPlayer.getPosition().getX() * 32 + currentPlayer.getPosition().getY() * 32; //nv_x = co_x_tilemap*32 + co_y_tilemap*32
                                     posPlayer.y = currentPlayer.getPosition().getY() * 16 - currentPlayer.getPosition().getX() * 16 + 40;//nv_y =co_y_tilemap*16 - co_x_tilemap*16
-                                    currentPlayer.setPosition(new Case(currentPlayer.getPosition().getX() + 6, currentPlayer.getPosition().getY(), ""));
+                                    currentPlayer.setPosition(nextPos);
                                     walkSound.play(9);
                                     Timer.schedule(new Timer.Task() { //on crée un time qui s'exécutera 0.5 secondes après
                                         @Override

@@ -347,29 +347,26 @@ public class FightScene extends Stage {
         useConsommable.setDisabled(true);
         if (fighterA.getHp() > 0 && fighterB.getHp() > 0) {
             waitforattack = true;
-            Timer.schedule(new Timer.Task() {
-                @Override
-                public void run() {
-                    FightSequence(currentAttacker, currentAttacker.equals(fighterA) ? fighterB : fighterA, 
-                                  currentAttacker.equals(fighterA) ? spriteEnnemy1 : spriteEnnemy2, 
-                                  currentAttacker.equals(fighterA) ? lostHealthF2 : lostHealthF1, 
-                                  currentAttacker.equals(fighterA) ? ennemyHealth2 : ennemyHealth1, 
-                                  currentAttacker.equals(fighterA) ? animF1 : animF2, 
-                                  currentAttacker.equals(fighterA) ? lossF2 : lossF1);
+            FightSequence(currentAttacker, currentAttacker.equals(fighterA) ? fighterB : fighterA, 
+                          currentAttacker.equals(fighterA) ? spriteEnnemy1 : spriteEnnemy2, 
+                          currentAttacker.equals(fighterA) ? lostHealthF2 : lostHealthF1, 
+                          currentAttacker.equals(fighterA) ? ennemyHealth2 : ennemyHealth1, 
+                          currentAttacker.equals(fighterA) ? animF1 : animF2, 
+                          currentAttacker.equals(fighterA) ? lossF2 : lossF1);
 
-                    currentAttacker = currentAttacker.equals(fighterA) ? fighterB : fighterA;
-
-                    Timer.schedule(new Timer.Task() { 
-                        @Override
-                        public void run() {
-                            waitforattack = false;
-                            if (fighterA.getHp() > 0 && fighterB.getHp() > 0) {
-                                executeCombatSequenceFaible(); // Recurse to continue the combat if both are still alive
-                            }
+            currentAttacker = currentAttacker.equals(fighterA) ? fighterB : fighterA;
+            if (fighterA.getHp() > 0 && fighterB.getHp() > 0) {
+                Timer.schedule(new Timer.Task() { 
+                    @Override
+                    public void run() {
+                        waitforattack = false;
+                        if (fighterA.getHp() > 0 && fighterB.getHp() > 0) {
+                            executeCombatSequenceFaible(); // Recurse to continue the combat if both are still alive
                         }
-                    }, 2f); // Wait for the animation to complete
-                }
-            }, 2f); // Initial wait before starting the combat
+                    }
+                }, 2f); // Wait for the animation to complete
+            }
+
         } else {
             waitforattack = false;
             // Optionally handle end of combat logic here
