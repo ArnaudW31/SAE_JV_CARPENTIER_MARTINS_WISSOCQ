@@ -20,7 +20,7 @@ import com.badlogic.gdx.utils.viewport.ScreenViewport;
 
 public class FightScene extends Stage {
     
-    private Entity fighterA;
+    private Player fighterA;
     private Entity fighterB;
     private Entity currentAttacker;
     private ImageButton useConsommable;
@@ -44,7 +44,7 @@ public class FightScene extends Stage {
         fighterB = new Entity();
     }
     
-    public FightScene(Camera camera, Entity Firstfighter, Entity Secondfighter){
+    public FightScene(Camera camera, Player Firstfighter, Entity Secondfighter){
         super(new ScreenViewport(camera));
         
         isFighting = true;
@@ -315,6 +315,58 @@ public class FightScene extends Stage {
                         currentAttacker = fighterA;
                 //alors l'ennemi attaque
             }
+        }
+        //si l'entité est une IA
+        if(currentAttacker.getClass().toString().equals("class com.wc.souterrain.Player")){
+            Player playerAttacker = (Player) currentAttacker;
+            if(playerAttacker.getAI()==true && fighterB.getClass().toString().equals("class com.wc.souterrain.Entity")){
+                while(fighterA.getHp()>0 || fighterB.getHp()>0){
+                    System.out.println("OUEPPPPPPP HARRRRYYYYYYYY");
+                    waitforattack = true;
+                    if(currentAttacker == fighterA){
+                        Timer.schedule(new Timer.Task() {
+                            @Override
+                            public void run() { //fighterB est toujours le monstre si c'est pas un joueur
+                                FightSequence(fighterA, fighterB,spriteEnnemy1,lostHealthF1,ennemyHealth2,animF1,lossF1);
+                                currentAttacker = fighterB;
+
+                                Timer.schedule(new Timer.Task() { //on attend la fin de l'animation
+                                    @Override
+                                    public void run(){
+                                        waitforattack = false;
+                                    }
+                                }
+                                ,2f);
+                            }
+                        },2f); 
+                    }else{
+                        Timer.schedule(new Timer.Task() {
+                            @Override
+                            public void run() { //fighterB est toujours le monstre si c'est pas un joueur
+                                FightSequence(fighterB, fighterA,spriteEnnemy2,lostHealthF2,ennemyHealth1,animF2,lossF2);
+                                currentAttacker = fighterA;
+
+                                Timer.schedule(new Timer.Task() { //on attend la fin de l'animation
+                                    @Override
+                                    public void run(){
+                                        waitforattack = false;
+                                    }
+                                }
+                                ,2f);
+                            }
+                        },2f); 
+                    }
+                }
+                if(fighterA.getHp()<=0){
+                    System.out.println("Le joueur est mort NOOOOOOOOOOOONNNNNNNN");
+                }else{
+                    System.out.println("Le monstre est mort AHAHAHAH");
+
+                }
+            }
+        }
+        else{
+            System.out.println("non le combatant n'est pas une IA");
         }
         
     }

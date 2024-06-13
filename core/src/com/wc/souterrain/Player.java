@@ -105,10 +105,12 @@ public class Player extends Entity{
         this.inventory = inventory;
     }
     
+    @Override
     public void setAI(boolean isAI){
         this.isAI = isAI;
     }
     
+    @Override
     public boolean getAI(){
         return this.isAI;
     }
