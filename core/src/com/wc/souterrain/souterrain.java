@@ -136,6 +136,7 @@ public class souterrain extends ApplicationAdapter {
         Minotaure.setCrit(15);
         Minotaure.setPrecision(65);
         Minotaure.setSpeed(40);
+        Minotaure.resetHealth();
 
         Medusa = new Entity();
         Medusa.setName("Medusa");
@@ -145,6 +146,7 @@ public class souterrain extends ApplicationAdapter {
         Medusa.setDef(50);
         Medusa.setPrecision(95);
         Medusa.setSpeed(200);
+        Medusa.resetHealth();
 
         Cyclope = new Entity();
         Cyclope.setName("Cyclope");
@@ -155,6 +157,7 @@ public class souterrain extends ApplicationAdapter {
         Cyclope.setCrit(1);
         Cyclope.setPrecision(30);
         Cyclope.setSpeed(30);
+        Cyclope.resetHealth();
 
         posPlayer = new Rectangle();
         posPlayer.width = 30;
@@ -548,7 +551,6 @@ public class souterrain extends ApplicationAdapter {
                                 playerFinalA.resetHealth();
                                 playerFinalB.resetHealth();
                             } else if (playerFinalC == null) {
-                                //System.out.println("Harry Potter et le prout de feu");
                                 Player p = (Player) UIfs.getFighterA();
                                 playerFinalC = new Player(p);
                                 System.out.println(playerFinalC.getName() + " est le playerFinalC. PlayerFinalC est défini.");

@@ -181,31 +181,7 @@ public class FightScene extends Stage {
                         FightSequence(fighterB, fighterA,spriteEnnemy2,lostHealthF2,ennemyHealth1,animF2,lossF2);
                         currentAttacker = fighterA;
                     }
-                    //si l'ennemi est un monstre
-                    if(currentAttacker.getClass().toString().equals("class com.wc.souterrain.Entity")){
-                        if(currentAttacker.getHp()>0){
-                            waitforattack = true;
-                            Timer.schedule(new Timer.Task() {
-                                @Override
-                                public void run() { //fighterB est toujours le monstre si c'est pas un joueur
-                                    FightSequence(fighterB, fighterA,spriteEnnemy2,lostHealthF2,ennemyHealth1,animF2,lossF2);
-                                    currentAttacker = fighterA;
-
-                                    Timer.schedule(new Timer.Task() { //on attend la fin de l'animation
-                                        @Override
-                                        public void run(){
-                                            waitforattack = false;
-                                        }
-                                    }
-                                    ,2f);
-                                }
-                            },2f);
-
-                        }
-                        else{
-                            System.out.println("Le monstre est mort");
-                        }
-                    }else if(currentAttacker.getClass().toString().equals("class com.wc.souterrain.Player")){
+                    if(currentAttacker.getClass().toString().equals("class com.wc.souterrain.Player")){
                         Player playerAttacker = (Player) currentAttacker;
 
                         if(playerAttacker.getAI()!=0){
@@ -230,6 +206,31 @@ public class FightScene extends Stage {
                             else{
                                 System.out.println("Le monstre est mort");
                             }
+                        }
+                    }
+                    //si l'ennemi est un monstre
+                    else if(currentAttacker.getClass().toString().equals("class com.wc.souterrain.Entity")){
+                        if(currentAttacker.getHp()>0){
+                            waitforattack = true;
+                            Timer.schedule(new Timer.Task() {
+                                @Override
+                                public void run() { //fighterB est toujours le monstre si c'est pas un joueur
+                                    FightSequence(fighterB, fighterA,spriteEnnemy2,lostHealthF2,ennemyHealth1,animF2,lossF2);
+                                    currentAttacker = fighterA;
+
+                                    Timer.schedule(new Timer.Task() { //on attend la fin de l'animation
+                                        @Override
+                                        public void run(){
+                                            waitforattack = false;
+                                        }
+                                    }
+                                    ,2f);
+                                }
+                            },2f);
+
+                        }
+                        else{
+                            System.out.println("Le monstre est mort");
                         }
                     }
                 }
@@ -336,8 +337,13 @@ public class FightScene extends Stage {
         addActor(consoLabel5);
         addActor(consoLabel6);
         
-       
-        if(fighterA.getSpeed()>fighterB.getSpeed()){
+        currentAttacker = fighterA;
+        if((currentAttacker.getClass().toString().equals("class com.wc.souterrain.Player"))&&((currentAttacker.equals(fighterA) ? fighterB : fighterA).getClass().toString().equals("class com.wc.souterrain.Player"))){
+            Player playerAttacker = (Player) currentAttacker;
+            if(playerAttacker.getAI()!=0){
+                currentAttacker = (currentAttacker.equals(fighterA) ? fighterB : fighterA);
+            }
+        }else if(fighterA.getSpeed()>fighterB.getSpeed()){
             currentAttacker = fighterA;
         }
         else{
@@ -357,10 +363,11 @@ public class FightScene extends Stage {
                 executeCombatSequenceMoyenne();
             }else if((playerAttacker.getAI() == 3)){
                 executeCombatSequenceForte();
+            }else{
+                System.out.println("non le combatant n'est pas une IA");
             }
-        }
-        else{
-            System.out.println("non le combatant n'est pas une IA");
+        }else{
+            System.out.println("non le combatant n'est pas un player");
         }
     }
     

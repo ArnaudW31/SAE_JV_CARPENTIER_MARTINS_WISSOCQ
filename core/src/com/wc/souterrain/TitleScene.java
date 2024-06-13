@@ -382,13 +382,16 @@ public class TitleScene extends Stage {
                             break;
                     }
                     addAI.add(iaDifficulte);
-                    setTransparent(facileButton);
-                    setTransparent(interButton);
-                    setTransparent(difficileButton);
-                    setTransparent(difficulteSelect);
+                    if(buttonAIclicked){
+                        setTransparent(facileButton);
+                        setTransparent(interButton);
+                        setTransparent(difficileButton);
+                        setTransparent(difficulteSelect);
+                        buttonAIclicked = false;
+                    }
                     iaDifficulte = 0;
                     difficulteSelect.setPosition(550,750);
-                    buttonAIclicked = false;
+                    
                     clickedSkin = 0;
                     selectedSkin.setDrawable(new SpriteDrawable(new Sprite(new Texture (Gdx.files.internal("bones.png")))));
                     selectedSkin.setBounds(50, 200, 128, 256);
@@ -424,10 +427,10 @@ public class TitleScene extends Stage {
                     nameList.add("Mama");
                     nameList.add("Mimi");
                     nameList.add("Mumu");
-                    addAI.add(1);
-                    addAI.add(1);
+                    addAI.add(3);
                     addAI.add(0);
-                    addAI.add(0);
+                    addAI.add(3);
+                    addAI.add(3);
                     setTransparent(TFName);
                     setTransparent(selectSkin1);
                     setTransparent(selectSkin2);
