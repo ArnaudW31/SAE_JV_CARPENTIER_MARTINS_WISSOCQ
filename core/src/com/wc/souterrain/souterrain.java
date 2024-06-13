@@ -484,6 +484,8 @@ public class souterrain extends ApplicationAdapter {
                                     direction = "droite";
                                     posPlayer.x = currentPlayer.getPosition().getX() * 32 + currentPlayer.getPosition().getY() * 32; //nv_x = co_x_tilemap*32 + co_y_tilemap*32
                                     posPlayer.y = currentPlayer.getPosition().getY() * 16 - currentPlayer.getPosition().getX() * 16 + 40;//nv_y =co_y_tilemap*16 - co_x_tilemap*16
+                                    System.out.println("np " + nextPos.getX() + " " + nextPos.getY());
+                                    System.out.println("cp " + currentPlayer.getPosition().getX() + " " + currentPlayer.getPosition().getY());
                                     currentPlayer.setPosition(nextPos);
                                     walkSound.play(9);
                                     Timer.schedule(new Timer.Task() { //on crée un time qui s'exécutera 0.5 secondes après
@@ -500,8 +502,10 @@ public class souterrain extends ApplicationAdapter {
                 }
                 camera.position.set(posPlayer.x, posPlayer.y, 0);
                 UImp.MoveUI(camera);
+                System.out.println("pas dans interface");
 
-            } else { //si on est dans une interface
+            } else if(inInterface) { //si on est dans une interface
+                System.out.println("Dans interface");
                 if (UIfs.isFighting == true) { //si on est en train de faire un combat
                     if (UIfs.getFighterB().getHp() <= 0) { //fin du combat (on peut changer)
                         if (UIfs.getFighterB().getClass().toString().equals("class com.wc.souterrain.Player")) {
