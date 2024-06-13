@@ -17,6 +17,7 @@ import com.badlogic.gdx.scenes.scene2d.ui.TextField;
 import com.badlogic.gdx.scenes.scene2d.utils.ClickListener;
 import com.badlogic.gdx.scenes.scene2d.utils.SpriteDrawable;
 import com.badlogic.gdx.utils.viewport.ScreenViewport;
+import java.io.IOException;
 import java.util.ArrayList;
 
 public class TitleScene extends Stage {
@@ -38,6 +39,8 @@ public class TitleScene extends Stage {
     private TextField TFName;
     private Label selectTimeLb;
     public TextField selectTime;
+    public TextField adresseIP;
+    private TextButton AIbutton;
     private ImageButton selectSkin1;
     private ImageButton selectSkin2;
     private ImageButton selectSkin3;
@@ -84,8 +87,12 @@ public class TitleScene extends Stage {
         TFName.setMessageText("Pseudo");
         setTransparent(TFName);
         
-        selectTime = new TextField("Durée de la partie ",skin);
-        setTransparent(selectTime);
+        adresseIP = new TextField("",skin);
+        setTransparent(adresseIP);
+        adresseIP.setMessageText("Adresse IP du serveur");
+        
+        AIbutton = new TextButton("",skin);
+        setTransparent(AIbutton);
         
         selectSkin1=new ImageButton(new SpriteDrawable(new Sprite(new Texture (Gdx.files.internal("bonorme.png")))));
         setTransparent(selectSkin1);
@@ -153,6 +160,7 @@ public class TitleScene extends Stage {
                 setTransparent(quitButton);
                 setOpaque(onlineButton);
                 setOpaque(localButton);
+                setOpaque(adresseIP);
                     
             }
         });
@@ -178,24 +186,31 @@ public class TitleScene extends Stage {
         onlineButton.addListener(new ClickListener(){
             @Override
             public void clicked(InputEvent event,float x, float y){
-                setTransparent(onlineButton);
-                setTransparent(localButton);
-                setOpaque(TFName);
-                setOpaque(selectSkin1);
-                setOpaque(selectSkin2);
-                setOpaque(selectSkin3);
-                setOpaque(selectSkin4);
-                setOpaque(selectedSkin);
-                setOpaque(validateButton);
-                setOpaque(entreePseudoLb);
-                setOpaque(selectedSkinLb);
+                try{
+                    new Thread(new Runnable() {
+                        @Override
+                        public void run() {
+                            GameClient.main(adresseIP.getText());
+                        }
+                    }).start();
+                    setTransparent(onlineButton);
+                    setTransparent(localButton);
+                    setTransparent(adresseIP);
+                    setOpaque(TFName);
+                    setOpaque(selectSkin1);
+                    setOpaque(selectSkin2);
+                    setOpaque(selectSkin3);
+                    setOpaque(selectSkin4);
+                    setOpaque(selectedSkin);
+                    setOpaque(validateButton);
+                    setOpaque(entreePseudoLb);
+                    setOpaque(selectedSkinLb);
+                }
+                catch (Exception e) {
+                    e.printStackTrace();
+                }
                 
-                new Thread(new Runnable() {
-                    @Override
-                    public void run() {
-                        GameClient.main(new String[0]);
-                    }
-                }).start();
+                
             }
         });
         
@@ -204,6 +219,7 @@ public class TitleScene extends Stage {
             public void clicked(InputEvent event,float x, float y){
                 setTransparent(onlineButton);
                 setTransparent(localButton);
+                setTransparent(adresseIP);
                 setOpaque(TFName);
                 setOpaque(selectSkin1);
                 setOpaque(selectSkin2);
@@ -357,6 +373,7 @@ public class TitleScene extends Stage {
         
         onlineButton.setPosition(250,500);
         localButton.setPosition(250,300);
+        adresseIP.setPosition(250,600);
         
         TFName.setPosition(50, 600);
         entreePseudoLb.setPosition(50, 650);
@@ -377,6 +394,7 @@ public class TitleScene extends Stage {
         addActor(quitButton);
         addActor(onlineButton);
         addActor(localButton);
+        addActor(adresseIP);
         addActor(selectedSkin);
         addActor(creditsLb);
         addActor(entreePseudoLb);
