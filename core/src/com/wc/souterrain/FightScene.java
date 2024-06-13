@@ -96,6 +96,7 @@ public class FightScene extends Stage {
             @Override
             public void clicked(InputEvent event,float x, float y){
                 useSpConso((Player)currentAttacker,"Pain");
+                GameClient.sendInformation(currentAttacker.getName() + " mange 1 pain !");   
             }
         });
         
@@ -105,6 +106,7 @@ public class FightScene extends Stage {
             @Override
             public void clicked(InputEvent event,float x, float y){
                 useSpConso((Player)currentAttacker,"Vin");
+                GameClient.sendInformation(currentAttacker.getName() + " boit une bouteille de vin !");   
             }
         });
         
@@ -114,6 +116,7 @@ public class FightScene extends Stage {
             @Override
             public void clicked(InputEvent event,float x, float y){
                 useSpConso((Player)currentAttacker,"Saucisson de Centaure");
+                GameClient.sendInformation(currentAttacker.getName() + " mange 1 saucisson !");   
             }
         });
         

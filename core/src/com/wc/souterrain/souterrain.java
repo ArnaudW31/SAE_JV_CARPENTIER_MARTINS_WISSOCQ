@@ -349,9 +349,11 @@ public class souterrain extends ApplicationAdapter {
                                                 if(c.getEntity()!=null){
                                                     SetupFight(c.getEntity());
                                                     c.setEntity(null);
+                                                    GameClient.sendInformation(currentPlayer.getName() + " rentre en combat");     
                                                 }
 
                                                 if (c.getType().equals("shop")){
+                                                    GameClient.sendInformation(currentPlayer.getName() + " rentre dans la boutique");   
                                                     SetupShop();
                                                 }
                                                 
@@ -388,9 +390,11 @@ public class souterrain extends ApplicationAdapter {
                                                 if(c.getEntity()!=null){
                                                     SetupFight(c.getEntity());
                                                     c.setEntity(null);
+                                                    GameClient.sendInformation(currentPlayer.getName() + " rentre en combat");     
                                                 }
 
                                                 if (c.getType().equals("shop")){
+                                                    GameClient.sendInformation(currentPlayer.getName() + " rentre dans la boutique");   
                                                     SetupShop();
                                                 }
                                                 
@@ -427,13 +431,16 @@ public class souterrain extends ApplicationAdapter {
                                                 if(c.getEntity()!=null){
                                                     SetupFight(c.getEntity());
                                                     c.setEntity(null);
+                                                    GameClient.sendInformation(currentPlayer.getName() + " rentre en combat");
                                                 }
                                                 if (c.getType().equals("shop")){
+                                                    GameClient.sendInformation(currentPlayer.getName() + " rentre dans la boutique");   
                                                     SetupShop();
                                                 }
                                                 
                                                 if (c.getType().equals("artefact")){
                                                     UImp.obtainWeapon(currentPlayer);
+                                                    
                                                 }
                                             }
                                         }
@@ -466,10 +473,12 @@ public class souterrain extends ApplicationAdapter {
 
                                                 if(c.getEntity()!=null){
                                                     SetupFight(c.getEntity());
+                                                    GameClient.sendInformation(currentPlayer.getName() + " rentre en combat");                 
                                                     c.setEntity(null);
                                                 }
 
                                                 if (c.getType().equals("shop")){
+                                                    GameClient.sendInformation(currentPlayer.getName() + " rentre dans la boutique");                 
                                                     SetupShop();
                                                 }
                                                 
@@ -493,6 +502,7 @@ public class souterrain extends ApplicationAdapter {
             else{ //si on est dans une interface
                 if(UIfs.isFighting == true){ //si on est en train de faire un combat
                     if(UIfs.getFighterB().getHp()<=0){ //fin du combat (on peut changer)
+                        GameClient.sendInformation(UIfs.getFighterA().getName() + " remporte le combat contre : " + UIfs.getFighterB().getName() + ". Il termine son tour.");   
                         if(UIfs.getFighterB().getClass().toString().equals("class com.wc.souterrain.Player")){
                             if(playerFinalA==null){
                                 Player p = (Player) UIfs.getFighterA();
@@ -895,7 +905,7 @@ public class souterrain extends ApplicationAdapter {
         }
     }
 
-    private void InitCharacters(){
+    public void InitCharacters(){
         player1.setName(UIts.nameList.get(0));
         player1.setSprite(new Texture(Gdx.files.internal(UIts.spriteList.get(0))));
         
@@ -955,7 +965,7 @@ public class souterrain extends ApplicationAdapter {
         UIss.MoveUI(camera);
         
         System.out.println(camera.position.x+"      " +camera.position.y);
-        
+
         Gdx.input.setInputProcessor(UIss);
     }
 }

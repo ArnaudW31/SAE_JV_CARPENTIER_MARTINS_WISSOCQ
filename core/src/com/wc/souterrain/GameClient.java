@@ -41,7 +41,6 @@ public class GameClient {
     }
 
     public static void sendInformation(String information) {
-        // Structure your message
         String structuredMessage = "INFO:" + information;
         out.println(structuredMessage);
     }
