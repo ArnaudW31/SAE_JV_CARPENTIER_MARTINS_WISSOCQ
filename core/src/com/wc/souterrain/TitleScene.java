@@ -57,7 +57,7 @@ public class TitleScene extends Stage {
     public boolean finished;
     public boolean init;
     private int iaDifficulte;
-    public ArrayList<Boolean> addAI;
+    public ArrayList<Integer> addAI;
     public boolean buttonAIclicked;
     public ArrayList<String> spriteList;
     public ArrayList<String> nameList;
@@ -73,7 +73,7 @@ public class TitleScene extends Stage {
         nameList = new ArrayList<>();
         clickedSkin = 0;
         init = false;
-        addAI = new ArrayList<Boolean>();
+        addAI = new ArrayList<Integer>();
         
         nomLb = new Label("Le souterrain des Heros", skin);
         
@@ -324,8 +324,7 @@ public class TitleScene extends Stage {
                             selectSkin4.getImage().setColor(0.2f, 0.2f, 0.2f, 0.9f);
                             break;
                     }
-                    System.out.println(iaDifficulte);
-                    addAI.add(buttonAIclicked);
+                    addAI.add(iaDifficulte);
                     setTransparent(facileButton);
                     setTransparent(interButton);
                     setTransparent(difficileButton);
@@ -368,10 +367,10 @@ public class TitleScene extends Stage {
                     nameList.add("Mama");
                     nameList.add("Mimi");
                     nameList.add("Mumu");
-                    addAI.add(true);
-                    addAI.add(true);
-                    addAI.add(false);
-                    addAI.add(false);
+                    addAI.add(1);
+                    addAI.add(1);
+                    addAI.add(0);
+                    addAI.add(0);
                     setTransparent(TFName);
                     setTransparent(selectSkin1);
                     setTransparent(selectSkin2);
