@@ -319,7 +319,7 @@ public class FightScene extends Stage {
         //si l'entité est une IA
         if(currentAttacker.getClass().toString().equals("class com.wc.souterrain.Player") && waitforattack == false){
             Player playerAttacker = (Player) currentAttacker;
-            if(playerAttacker.getAI() == true && fighterB.getClass().toString().equals("class com.wc.souterrain.Entity")){
+            if((playerAttacker.getAI() == 1 || playerAttacker.getAI() == 2 || playerAttacker.getAI() == 3) && fighterB.getClass().toString().equals("class com.wc.souterrain.Entity")){
                 executeCombatSequence();
             }
         }
