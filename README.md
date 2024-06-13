@@ -1,15 +1,9 @@
-# BONJOUR A QUICONQUE LIS CE README
-## Que ce soit Simon , MMe Pacou ou moi dans le futur.
+# Retrouver l'intégrité des informations concernant le jeu "Le souterrain des héros" à partir de ce lien :
 
-Ce git contien(dra) notre **JEU VIDEAL**, Le Souterrain des héros !
+https://1drv.ms/b/c/8af4f90685726e40/EVgxkZ1LFJlAm0Vn5rQZk7ABM5ZeHAjI7mPrmgP-nOKK2A?e=0OtiqH
 
-## Les règles sont :
+#### "Le souterrain des héros" by :
 
--4 joueurs apparaissent dans les 4 coins d'une carte
--chacun doit augmenter ses statistiques en battant des monstres et en trouvant des armes *uniques*
--a la fin de la partie les joueurs s'affrontent en 1v1 pour savoir qui remporte la victoire
--le joueurs victorieux obtient un biscuit (virtuel) (pas sûr en vrai) et à le droit de se la raconter devant ses amis pendant 1 minute (après c'est saoulant)
-
-On a utilisé la bibliothèque libGDX pour java pour faire ce jeu. (https://libgdx.com/)
-Voici la [documentation si vous voulez voir](https://javadoc.io/doc/com.badlogicgames.gdx/gdx/latest/index.html)
-bon bah voila
+# Simon CARPENTIER
+## Arnaud WISSOCQ
+### Pierre MARTINS
