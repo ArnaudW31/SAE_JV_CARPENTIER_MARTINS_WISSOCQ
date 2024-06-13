@@ -5,7 +5,7 @@ import java.net.*;
 
 public class GameClient {
 
-    private static String SERVER_ADDRESS;
+    public static String SERVER_ADDRESS;
     private static final int SERVER_PORT = 12345;
     private static PrintWriter out;
 
