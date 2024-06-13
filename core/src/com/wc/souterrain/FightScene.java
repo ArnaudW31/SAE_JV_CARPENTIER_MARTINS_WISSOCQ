@@ -1,5 +1,6 @@
 package com.wc.souterrain;
 
+import java.lang.Thread;
 import com.badlogic.gdx.Gdx;
 import com.badlogic.gdx.graphics.Camera;
 import com.badlogic.gdx.graphics.Color;
@@ -20,7 +21,7 @@ import com.badlogic.gdx.utils.viewport.ScreenViewport;
 
 public class FightScene extends Stage {
     
-    private Entity fighterA;
+    private Player fighterA;
     private Entity fighterB;
     private Entity currentAttacker;
     private ImageButton useConsommable;
@@ -44,7 +45,7 @@ public class FightScene extends Stage {
         fighterB = new Entity();
     }
     
-    public FightScene(Camera camera, Entity Firstfighter, Entity Secondfighter){
+    public FightScene(Camera camera, Player Firstfighter, Entity Secondfighter){
         super(new ScreenViewport(camera));
         
         isFighting = true;
@@ -315,7 +316,66 @@ public class FightScene extends Stage {
                 //alors l'ennemi attaque
             }
         }
-        
+        //si l'entité est une IA
+        if(currentAttacker.getClass().toString().equals("class com.wc.souterrain.Player") && waitforattack == false){
+            Player playerAttacker = (Player) currentAttacker;
+            if(playerAttacker.getAI() == true && fighterB.getClass().toString().equals("class com.wc.souterrain.Entity")){
+                executeCombatSequence();
+            }
+        }
+        else{
+            System.out.println("non le combatant n'est pas une IA");
+        }
+    }
+    
+    private void executeCombatSequence() {
+        //redémarrage des actions
+        spriteEnnemy1.clearActions();
+        spriteEnnemy2.clearActions();
+        lostHealthF1.clearActions();
+        lostHealthF1.setPosition(-1700, 500);
+        lostHealthF2.clearActions();
+        lostHealthF2.setPosition(-1200, 500);
+        animF1.restart();
+        animF2.restart(); 
+        lossF1.restart();
+        lossF2.restart();
+        useConsommable.setDisabled(true);
+        if (fighterA.getHp() > 0 && fighterB.getHp() > 0) {
+            waitforattack = true;
+            Timer.schedule(new Timer.Task() {
+                @Override
+                public void run() {
+                    FightSequence(currentAttacker, currentAttacker.equals(fighterA) ? fighterB : fighterA, 
+                                  currentAttacker.equals(fighterA) ? spriteEnnemy1 : spriteEnnemy2, 
+                                  currentAttacker.equals(fighterA) ? lostHealthF2 : lostHealthF1, 
+                                  currentAttacker.equals(fighterA) ? ennemyHealth2 : ennemyHealth1, 
+                                  currentAttacker.equals(fighterA) ? animF1 : animF2, 
+                                  currentAttacker.equals(fighterA) ? lossF2 : lossF1);
+
+                    currentAttacker = currentAttacker.equals(fighterA) ? fighterB : fighterA;
+
+                    Timer.schedule(new Timer.Task() { 
+                        @Override
+                        public void run() {
+                            waitforattack = false;
+                            if (fighterA.getHp() > 0 && fighterB.getHp() > 0) {
+                                executeCombatSequence(); // Recurse to continue the combat if both are still alive
+                            }
+                        }
+                    }, 2f); // Wait for the animation to complete
+                }
+            }, 2f); // Initial wait before starting the combat
+        } else {
+            waitforattack = false;
+            // Optionally handle end of combat logic here
+            if (fighterA.getHp() <= 0) {
+                System.out.println("Fighter A is dead");
+            }
+            if (fighterB.getHp() <= 0) {
+                System.out.println("Fighter B is dead");
+            }
+        }
     }
     
     private void FightSequence(Entity attacker, Entity defender, //attaquant et defenseur
