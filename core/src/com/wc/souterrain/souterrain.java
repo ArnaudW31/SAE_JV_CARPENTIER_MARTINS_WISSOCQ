@@ -29,6 +29,7 @@ public class souterrain extends ApplicationAdapter {
     private Player player2;
     private Player player3;
     private Player player4;
+    private Player player5;
     private Player playerFinalA;
     private Player playerFinalB;
     private Player playerFinalC;
@@ -266,6 +267,11 @@ public class souterrain extends ApplicationAdapter {
                 currentZone = ZoneFive;
                 currentTilemap = currentZone.getRenderer();
                 if (premierCbtArene == 0) {
+                    if(player1.getAI()!=0){
+                        player5=player1;
+                        player1=player2;
+                        player2=player5;
+                    }
                     player1.setPosition(spawnF1);
                     currentPlayer = player1;
                     posPlayer.x = currentPlayer.getPosition().getX() * 32 + currentPlayer.getPosition().getY() * 32;
@@ -284,6 +290,11 @@ public class souterrain extends ApplicationAdapter {
                 currentZone = ZoneSix;
                 currentTilemap = currentZone.getRenderer();
                 if (deuxiemeCbtArene == 0) {
+                    if(player3.getAI()!=0){
+                        player5=player3;
+                        player3=player4;
+                        player4=player5;
+                    }
                     currentPlayer = player3;
                     spawnF3.setEntity(null);
                     player3.setPosition(spawnF3);
@@ -297,6 +308,11 @@ public class souterrain extends ApplicationAdapter {
                 lastTurn4 = true;
             }
             if ((lastTurn4 == true) && ((round % 4 == 1) || (round % 4 == 0))) {
+                if(playerFinalA.getAI()!=0){
+                    player5=playerFinalA;
+                    playerFinalA=playerFinalB;
+                    playerFinalB=player5;
+                }
                 currentPlayer = playerFinalA;
                 if (premierCbtArene != 11) {
                     playerFinalA.resetHealth();

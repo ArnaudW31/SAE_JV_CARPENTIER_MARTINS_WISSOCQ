@@ -427,10 +427,10 @@ public class TitleScene extends Stage {
                     nameList.add("Mama");
                     nameList.add("Mimi");
                     nameList.add("Mumu");
+                    addAI.add(1);
                     addAI.add(3);
                     addAI.add(0);
-                    addAI.add(3);
-                    addAI.add(3);
+                    addAI.add(2);
                     setTransparent(TFName);
                     setTransparent(selectSkin1);
                     setTransparent(selectSkin2);
